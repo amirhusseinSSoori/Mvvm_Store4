@@ -1,0 +1,17 @@
+query GetList($owners: String!) {
+  repositoryOwner(login:$owners) {
+    repositories(first: 100) {
+      totalCount
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      nodes{
+        name
+        owner {
+          login
+        }
+      }
+    }
+  }
+}

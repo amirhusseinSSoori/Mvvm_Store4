@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/introFragment">
+    <fragment
+        android:id="@+id/introFragment"
+        tools:layout="@layout/fragment_intro"
+        android:name="com.example.myapplication.ui.intro.IntroFragment"
+        android:label="IntroFragment" >
+        <action
+            android:id="@+id/action_introFragment_to_repositoryFragment"
+            app:destination="@id/repositoryFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/repositoryFragment"
+        tools:layout="@layout/fragment_repository"
+        android:name="com.example.myapplication.ui.repositories.RepositoryFragment"
+        android:label="RepositoryFragment" />
+
+
+</navigation>

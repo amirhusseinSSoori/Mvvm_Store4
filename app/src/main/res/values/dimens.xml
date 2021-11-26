@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+     //intro Fragment
+    <dimen name="icon">40dp</dimen>
+</resources>
