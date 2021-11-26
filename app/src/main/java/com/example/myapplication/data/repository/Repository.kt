@@ -6,5 +6,5 @@ import example.myapplication.GetListQuery
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun getListRepFromSource(owner: String): ApolloResult<GetListQuery.Data?>
+    suspend fun getListRepFromSource(owner: String): Flow<ApolloResult<GetListQuery.Data?>>
 }

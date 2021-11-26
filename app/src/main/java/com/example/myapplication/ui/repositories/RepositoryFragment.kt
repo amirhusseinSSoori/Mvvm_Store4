@@ -34,8 +34,8 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
                     }
                     is ApolloResult.Error ->{
                         Log.e("TAG", "onCreate:${it.exception.cause} ", )
-
                     }
+                    else -> Unit
                 }
 
 

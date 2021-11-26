@@ -24,16 +24,14 @@ class RepositoryViewModel @Inject constructor(val rep: Repository) : ViewModel()
     fun showRepositoryList() {
 
         viewModelScope.launch {
-            state.value= rep.getListRepFromSource("amirhusseinSSoori")
+            rep.getListRepFromSource("amirhusseinSSoori").collect {
+                state.value= it
+            }
+
         }
 
     }
 
 
-    sealed class StateRepositoryList() {
-        object Idl : StateRepositoryList()
-        data class Loading(var isLoading: Boolean) : StateRepositoryList()
-        data class Error(var message: DataSourceException) : StateRepositoryList()
-        data class ShowDetails(var data: ApolloResult<GetListQuery.Data?>) : StateRepositoryList()
-    }
+
 }

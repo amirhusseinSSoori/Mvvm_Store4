@@ -1,6 +1,9 @@
 package com.example.myapplication.data.di
 
 import com.apollographql.apollo.ApolloClient
+import com.example.myapplication.data.db.dao.GithubDao
+import com.example.myapplication.data.source.local.LocalSource
+import com.example.myapplication.data.source.local.LocalSourceImp
 import com.example.myapplication.data.source.remote.RemoteSource
 import com.example.myapplication.data.source.remote.RemoteSourceImp
 import dagger.Module
@@ -16,5 +19,10 @@ object SourceModule {
     @Provides
     fun provideNetworkSource(network: ApolloClient): RemoteSource {
         return RemoteSourceImp(network)
+    }
+
+    @Provides
+    fun provideLocalSource(network: GithubDao): LocalSource {
+        return LocalSourceImp(network)
     }
 }

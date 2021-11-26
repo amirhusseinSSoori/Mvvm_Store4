@@ -1,14 +1,11 @@
 query GetList($owners: String!) {
   repositoryOwner(login:$owners) {
-    repositories(first: 100) {
-      totalCount
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-      nodes{
+    repositories(first: 50)
+    {nodes{
         name
         owner {
+          avatarUrl
+          url
           login
         }
       }

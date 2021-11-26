@@ -1,13 +1,11 @@
 package com.example.myapplication.ui.repositories.adabter
 
-import androidx.recyclerview.widget.ListAdapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.databinding.RepItemsBinding
-import com.example.myapplication.util.BaseDiffCallback
 import example.myapplication.GetListQuery
 
 class RepositoryAdapter(private val interaction: Interaction? = null) :
@@ -59,14 +57,12 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
         fun bind(item: GetListQuery.Node?) = with(itemView) {
             binding.txtItemRep.text = item!!.name
             setOnClickListener {
-                interaction?.onMovieVerClicked(item)
+                interaction?.onClicked(item)
             }
-
-
         }
     }
 
     interface Interaction {
-        fun onMovieVerClicked(item: GetListQuery.Node?)
+        fun onClicked(item: GetListQuery.Node?)
     }
 }
