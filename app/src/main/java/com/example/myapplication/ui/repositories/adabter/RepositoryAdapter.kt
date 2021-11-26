@@ -5,22 +5,24 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+
+import com.example.myapplication.data.mappers.NodeModel
 import com.example.myapplication.databinding.RepItemsBinding
 import example.myapplication.GetListQuery
 
 class RepositoryAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<GetListQuery.Node?>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NodeModel?>() {
         override fun areItemsTheSame(
-            oldItem: GetListQuery.Node,
-            newItem: GetListQuery.Node
+            oldItem: NodeModel,
+            newItem: NodeModel
         ): Boolean {
             return oldItem.owner == newItem.owner
         }
         override fun areContentsTheSame(
-            oldItem: GetListQuery.Node,
-            newItem: GetListQuery.Node
+            oldItem: NodeModel,
+            newItem: NodeModel
         ): Boolean {
             return oldItem.owner == newItem.owner
         }
@@ -36,7 +38,7 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is MovieViewHolder -> {
-                holder.bind(differ.currentList[position])
+                holder.bind(differ.currentList[position]!!)
             }
         }
     }
@@ -44,7 +46,7 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
-    fun submitList(list: List<GetListQuery.Node?>) {
+    fun submitList(list: List<NodeModel>) {
         differ.submitList(list)
     }
 
@@ -54,7 +56,7 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
         private val interaction: Interaction?
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: GetListQuery.Node?) = with(itemView) {
+        fun bind(item: NodeModel) = with(itemView) {
             binding.txtItemRep.text = item!!.name
             setOnClickListener {
                 interaction?.onClicked(item)
@@ -63,6 +65,6 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
     }
 
     interface Interaction {
-        fun onClicked(item: GetListQuery.Node?)
+        fun onClicked(item: NodeModel)
     }
 }

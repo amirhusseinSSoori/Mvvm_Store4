@@ -2,11 +2,11 @@ package com.example.myapplication.data.db.enity
 
 import androidx.room.Embedded
 import androidx.room.Entity
+import example.myapplication.GetListQuery
 
-@Entity(tableName = "node", primaryKeys = ["id"])
+@Entity(tableName = "nodeEntity", primaryKeys = ["id"])
 data class NodeEntity(
     val id: Int? = null,
     val name: String? = null,
-    @Embedded
-    val ownerEntity: OwnerEntity? = null
+    val ownerEntity: OwnerEntity ?= null
 )

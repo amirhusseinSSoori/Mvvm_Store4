@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.R
+
+import com.example.myapplication.data.mappers.NodeModel
 import com.example.myapplication.data.network.errorHandle.ApolloResult
 import com.example.myapplication.databinding.FragmentRepositoryBinding
 import com.example.myapplication.ui.repositories.adabter.RepositoryAdapter
@@ -26,11 +28,11 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         super.onCreate(savedInstanceState)
         repositoryAdapter = RepositoryAdapter()
         lifecycleScope.launch {
-            viewModel.state.collect {
-
+            viewModel._state.collect {
                 when(it){
                     is ApolloResult.Success ->{
-                        setUpSeriesRecycler(it.data!!.repositoryOwner!!.repositories.nodes!!)
+                        setUpSeriesRecycler(it.data)
+                        Log.e("TAG", "setUpSeriesRecycler: ${it.data}")
                     }
                     is ApolloResult.Error ->{
                         Log.e("TAG", "onCreate:${it.exception.cause} ", )
@@ -58,8 +60,7 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
     }
 
 
-    private fun setUpSeriesRecycler(list: List<GetListQuery.Node?>?) {
-        Log.e("TAG", "setUpSeriesRecycler: ${list}")
+    private fun setUpSeriesRecycler(list: List<NodeModel>) {
         binding.recyclerviewRepositoryF.adapter = repositoryAdapter
         binding.recyclerviewRepositoryF.setHasFixedSize(true)
         repositoryAdapter?.submitList(list!!)

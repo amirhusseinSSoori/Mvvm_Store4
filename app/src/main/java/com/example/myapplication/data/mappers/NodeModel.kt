@@ -1,7 +1,21 @@
 package com.example.myapplication.data.mappers
 
+import com.example.myapplication.data.db.enity.NodeEntity
+import com.example.myapplication.data.db.enity.OwnerEntity
+import example.myapplication.GetListQuery
+
 data class NodeModel(
-    val id:Int?=null,
     val name: String?=null,
-    val ownerEntity: List<OwnerModel>?=null
+    val owner: OwnerModel?=null
 )
+
+data class OwnerModel(
+    val avatarUrl: String?=null,
+    val login: String?=null,
+    val url: String?=null
+)
+
+
+
+
+

@@ -3,6 +3,8 @@ package com.example.myapplication.ui.repositories
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.apollographql.apollo.ApolloQueryCall
+
+import com.example.myapplication.data.mappers.NodeModel
 import com.example.myapplication.data.network.errorHandle.ApolloResult
 import com.example.myapplication.data.network.errorHandle.DataSourceException
 import com.example.myapplication.data.repository.Repository
@@ -17,7 +19,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RepositoryViewModel @Inject constructor(val rep: Repository) : ViewModel() {
-    val state = MutableStateFlow<ApolloResult<GetListQuery.Data?>>(ApolloResult.Empty())
+    val state = MutableStateFlow<ApolloResult<List<NodeModel>>>(ApolloResult.Empty())
     val _state = state.asStateFlow()
 
 
@@ -25,13 +27,12 @@ class RepositoryViewModel @Inject constructor(val rep: Repository) : ViewModel()
 
         viewModelScope.launch {
             rep.getListRepFromSource("amirhusseinSSoori").collect {
-                state.value= it
+                state.value = it
             }
 
         }
 
     }
-
 
 
 }

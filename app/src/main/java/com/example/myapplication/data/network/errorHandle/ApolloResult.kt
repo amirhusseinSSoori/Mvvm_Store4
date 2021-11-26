@@ -3,7 +3,7 @@ package com.example.myapplication.data.network.errorHandle
 sealed class ApolloResult<out T> {
     class Empty<T> : ApolloResult<T>()
     data class Success<out T>(val data: T) : ApolloResult<T>()
-    data class Error(val exception: DataSourceException) : ApolloResult<Nothing>()
+    data class Error(val exception: Throwable) : ApolloResult<Nothing>()
     object Loading : ApolloResult<Nothing>()
 }
 
@@ -12,7 +12,7 @@ inline fun <T : Any> ApolloResult<T>.onSuccess(action: (T) -> Unit): ApolloResul
     return this
 }
 
-inline fun <T : Any> ApolloResult<T>.onError(action: (DataSourceException) -> Unit): ApolloResult<T> {
+inline fun <T : Any> ApolloResult<T>.onError(action: (Throwable) -> Unit): ApolloResult<T> {
     if (this is ApolloResult.Error) action(exception)
     return this
 }
