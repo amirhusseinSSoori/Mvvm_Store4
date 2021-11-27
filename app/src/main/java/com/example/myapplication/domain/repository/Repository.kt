@@ -5,5 +5,5 @@ import com.example.myapplication.domain.exception.ApolloResult
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun getListRepFromSource(): Flow<ApolloResult<List<NodeModel>>>
+     fun getListRepFromSource(): Flow<ApolloResult<List<NodeModel>>>
 }

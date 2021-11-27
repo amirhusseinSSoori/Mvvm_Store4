@@ -18,7 +18,7 @@ class RepositoryImp @Inject constructor(
     val local: LocalSource,
     val mapper: NMapper
 ) : Repository {
-    override suspend fun getListRepFromSource(): Flow<ApolloResult<List<NodeModel>>> =
+    override  fun getListRepFromSource(): Flow<ApolloResult<List<NodeModel>>> =
         flow {
             when (val result = network.getListRepFromNetwork()) {
                 is ApolloResult.Success -> result.data.apply {
@@ -45,9 +45,5 @@ class RepositoryImp @Inject constructor(
 
             }
         }.onStart { emit(ApolloResult.Loading) }
-
-
-
-
 }
 
