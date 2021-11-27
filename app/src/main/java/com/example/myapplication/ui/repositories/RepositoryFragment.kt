@@ -11,6 +11,7 @@ import com.example.myapplication.R
 import com.example.myapplication.data.mappers.NodeModel
 import com.example.myapplication.data.network.errorHandle.ApolloResult
 import com.example.myapplication.databinding.FragmentRepositoryBinding
+import com.example.myapplication.ui.BaseFragment
 import com.example.myapplication.ui.repositories.adabter.RepositoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import example.myapplication.GetListQuery
@@ -18,14 +19,16 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RepositoryFragment : Fragment(R.layout.fragment_repository) {
+class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepositoryBinding::inflate) {
 
     private val viewModel: RepositoryViewModel by viewModels()
-    lateinit var binding: FragmentRepositoryBinding
     private lateinit var repositoryAdapter: RepositoryAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
 
-        super.onCreate(savedInstanceState)
+    override fun initialEvent() {
+        viewModel.showRepositoryList()
+    }
+
+    override fun initObserve() {
         repositoryAdapter = RepositoryAdapter()
         lifecycleScope.launch {
             viewModel._state.collect {
@@ -39,31 +42,17 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
                     }
                     else -> Unit
                 }
-
-
-
-
-
-
-
-
             }
 
         }
     }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentRepositoryBinding.bind(view)
-        super.onViewCreated(view, savedInstanceState)
-        viewModel.showRepositoryList()
-
-    }
-
 
     private fun setUpSeriesRecycler(list: List<NodeModel>) {
         binding.recyclerviewRepositoryF.adapter = repositoryAdapter
         binding.recyclerviewRepositoryF.setHasFixedSize(true)
         repositoryAdapter?.submitList(list!!)
     }
+
+
 
 }

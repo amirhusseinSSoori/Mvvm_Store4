@@ -5,12 +5,12 @@ import com.example.myapplication.data.db.enity.NodeEntity
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class LocalSourceImp @Inject constructor(val dao: GithubDao) :LocalSource {
-    override suspend fun getListRepository(): Flow<List<NodeEntity> >{
+class LocalSourceImp @Inject constructor(val dao: GithubDao) : LocalSource {
+    override fun getListRepository(): Flow<List<NodeEntity>> {
         return dao.getListRepository()
     }
-    override suspend fun insertListRepository(list: List<NodeEntity>) {
-        dao.insert(list)
+    override suspend fun updateListRepository(list: List<NodeEntity>) {
+        dao.update(list)
     }
 }
 

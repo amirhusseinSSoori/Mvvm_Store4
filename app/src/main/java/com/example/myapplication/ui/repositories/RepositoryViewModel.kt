@@ -24,14 +24,11 @@ class RepositoryViewModel @Inject constructor(val rep: Repository) : ViewModel()
 
 
     fun showRepositoryList() {
-
         viewModelScope.launch {
-            rep.getListRepFromSource("amirhusseinSSoori").collect {
+            rep.getListRepFromSource().collect {
                 state.value = it
             }
-
         }
-
     }
 
 

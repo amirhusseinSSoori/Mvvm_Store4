@@ -1,21 +1,10 @@
 package com.example.myapplication.data.repository
 
-import android.util.Log
-import com.apollographql.apollo.ApolloQueryCall
-import com.apollographql.apollo.coroutines.await
-import com.example.myapplication.data.db.enity.NodeEntity
-import com.example.myapplication.data.db.enity.OwnerEntity
 
-
-import com.example.myapplication.data.mappers.NodeMapper
-import com.example.myapplication.data.mappers.NodeModel
-import com.example.myapplication.data.mappers.mapToDomainModel
-import com.example.myapplication.data.mappers.maptoEntityList
+import com.example.myapplication.data.mappers.*
 import com.example.myapplication.data.network.errorHandle.ApolloResult
-import com.example.myapplication.data.network.errorHandle.DataSourceException
 import com.example.myapplication.data.source.local.LocalSource
 import com.example.myapplication.data.source.remote.RemoteSource
-import example.myapplication.GetListQuery
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -25,23 +14,23 @@ import javax.inject.Inject
 class RepositoryImp @Inject constructor(
     val network: RemoteSource,
     val local: LocalSource,
-    val mapper: NodeMapper
+    val mapper: NMapper
 ) : Repository {
-    override suspend fun getListRepFromSource(owner: String): Flow<ApolloResult<List<NodeModel>>> =
+    override suspend fun getListRepFromSource(): Flow<ApolloResult<List<NodeModel>>> =
         flow {
-            when (val result = network.getListRepFromNetwork(owner)) {
+            when (val result = network.getListRepFromNetwork()) {
                 is ApolloResult.Success -> result.data.apply {
-                    result.data!!.repositoryOwner!!.repositories.nodes!!?.let {
-                        local.insertListRepository(mapper.mapFromEntityList(it))
+                    result.data!!.viewer!!.repositories.nodes!!?.let {
+                        local.updateListRepository(mapper.mapFromEntityList(it))
                     }
                     emit(ApolloResult.Success(this!!.mapToDomainModel()))
                 }
                 is ApolloResult.Error -> {
-                    val listCharacters = local.getListRepository().first()
-                    if (listCharacters.isNotEmpty()) {
+                    val repositoes = local.getListRepository().first()
+                    if (repositoes.isNotEmpty()) {
                         emit(
                             ApolloResult.Success(
-                                maptoEntityList(listCharacters)
+                                maptoEntityModel(repositoes)
                             )
                         )
                     } else {
@@ -54,6 +43,8 @@ class RepositoryImp @Inject constructor(
 
             }
         }.onStart { emit(ApolloResult.Loading) }
+
+
 
 
 }

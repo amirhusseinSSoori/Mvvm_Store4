@@ -10,5 +10,5 @@ import example.myapplication.GetListQuery
 import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun getListRepFromSource(owner: String): Flow<ApolloResult<List<NodeModel>>>
+    suspend fun getListRepFromSource(): Flow<ApolloResult<List<NodeModel>>>
 }

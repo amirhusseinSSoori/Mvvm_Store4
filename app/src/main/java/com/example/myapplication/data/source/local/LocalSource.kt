@@ -4,8 +4,6 @@ import com.example.myapplication.data.db.enity.NodeEntity
 import kotlinx.coroutines.flow.Flow
 
 interface LocalSource {
-
-    suspend fun getListRepository(): Flow<List<NodeEntity>>
-    suspend fun insertListRepository(list:List<NodeEntity>)
-
+    fun getListRepository(): Flow<List<NodeEntity>>
+    suspend fun updateListRepository(list:List<NodeEntity>)
 }

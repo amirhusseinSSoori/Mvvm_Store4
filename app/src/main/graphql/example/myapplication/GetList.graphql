@@ -1,14 +1,15 @@
-query GetList($owners: String!) {
-  repositoryOwner(login:$owners) {
-    repositories(first: 50)
-    {nodes{
-        name
-        owner {
-          avatarUrl
-          url
-          login
+query GetList{
+    viewer {
+        login
+        repositories(first: 50)
+        {nodes{
+            name
+            owner {
+                avatarUrl
+                url
+                login
+            }
         }
-      }
+        }
     }
-  }
 }
