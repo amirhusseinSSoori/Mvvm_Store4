@@ -1,8 +1,9 @@
 package com.example.myapplication.data.source.remote
 
-import com.example.myapplication.domain.exception.ApolloResult
+import com.apollographql.apollo.ApolloQueryCall
+import com.apollographql.apollo.api.Response
 import example.myapplication.GetListQuery
 
 interface RemoteSource {
-   suspend fun getListRepFromNetwork(): ApolloResult<GetListQuery.Data?>
+   suspend fun getListRepFromNetwork(): Response<GetListQuery.Data>
 }

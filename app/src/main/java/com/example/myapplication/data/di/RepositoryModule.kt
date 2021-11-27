@@ -9,6 +9,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -18,4 +20,16 @@ object RepositoryModule {
     fun provideRepository(source: RemoteSource,localSource: LocalSource,mapper: NMapper): Repository {
         return RepositoryImp(source,localSource,mapper)
     }
+
+    @Provides
+    fun provideDispatcherProvider(): DispatcherProvider = DispatcherProviderImpl()
 }
+
+
+interface DispatcherProvider {
+    fun main(): CoroutineDispatcher = Dispatchers.Main
+    fun default(): CoroutineDispatcher = Dispatchers.Default
+    fun io(): CoroutineDispatcher = Dispatchers.IO
+}
+
+class DispatcherProviderImpl : DispatcherProvider

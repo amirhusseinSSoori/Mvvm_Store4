@@ -1,9 +1,9 @@
 package com.example.myapplication.domain.repository
 
-import com.example.myapplication.domain.model.NodeModel
-import com.example.myapplication.domain.exception.ApolloResult
-import kotlinx.coroutines.flow.Flow
+import com.dropbox.android.external.store4.Store
+import com.example.myapplication.data.db.enity.NodeEntity
+
 
 interface Repository {
-     fun getListRepFromSource(): Flow<ApolloResult<List<NodeModel>>>
+    fun getStore(): Store<String, List<NodeEntity>>
 }

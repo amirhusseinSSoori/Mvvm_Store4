@@ -5,15 +5,17 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
+import com.example.myapplication.data.db.enity.NodeEntity
 
 import com.example.myapplication.domain.model.NodeModel
-import com.example.myapplication.domain.exception.ApolloResult
+
 import com.example.myapplication.databinding.FragmentRepositoryBinding
 import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.repositories.adabter.RepositoryAdapter
@@ -33,17 +35,26 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         super.onCreate(savedInstanceState)
         repositoryAdapter = RepositoryAdapter()
         viewModel.setEvent(ReposirtorContract.Event.OnShowResult)
+        sideEffect()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentRepositoryBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
+        initObserve()
 
+        binding!!.txtRepositoryFShowMessage.setOnClickListener {
+            viewModel.setEvent(ReposirtorContract.Event.OnShowResult)
+        }
+
+    }
+
+    private fun initObserve() {
         lifecycleScope.launch {
             viewModel.uiState.collect {
                 when (it.state) {
                     is ReposirtorContract.SendRequestState.Idle -> {
-                        Log.e("TAG", "onCollectTurnOnRequest:  isIdle")
+
                     }
                     is ReposirtorContract.SendRequestState.Success -> {
                         setUpSeriesRecycler(list = it.state.allData)
@@ -51,14 +62,11 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
                 }
             }
         }
-        sideEffect()
-        button()
-
     }
 
 
     private fun sideEffect() {
-        lifecycleScope.launchWhenCreated {
+        lifecycleScope.launchWhenStarted {
             viewModel.effect.collect {
                 when (it) {
                     is ReposirtorContract.Effect.ShowMessage -> {
@@ -74,17 +82,13 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         }
     }
 
-    fun button() {
-        binding!!.txtRepositoryFShowMessage.setOnClickListener {
-            binding!!.txtRepositoryFShowMessage.isVisible = false
-        }
-    }
 
-    private fun setUpSeriesRecycler(list: List<NodeModel>) {
+    private fun setUpSeriesRecycler(list: List<NodeEntity>) {
         binding!!.recyclerviewRepositoryF.adapter = repositoryAdapter
         binding!!.recyclerviewRepositoryF.setHasFixedSize(true)
         repositoryAdapter?.submitList(list!!)
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

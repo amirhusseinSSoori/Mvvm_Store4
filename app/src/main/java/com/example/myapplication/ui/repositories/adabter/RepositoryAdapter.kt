@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.data.db.enity.NodeEntity
 
 import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.databinding.RepItemsBinding
@@ -12,18 +13,18 @@ import com.example.myapplication.databinding.RepItemsBinding
 class RepositoryAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NodeModel?>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NodeEntity?>() {
         override fun areItemsTheSame(
-            oldItem: NodeModel,
-            newItem: NodeModel
+            oldItem: NodeEntity,
+            newItem: NodeEntity
         ): Boolean {
-            return oldItem.owner == newItem.owner
+            return oldItem.id == newItem.id
         }
         override fun areContentsTheSame(
-            oldItem: NodeModel,
-            newItem: NodeModel
+            oldItem: NodeEntity,
+            newItem: NodeEntity
         ): Boolean {
-            return oldItem.owner == newItem.owner
+            return oldItem.id == newItem.id
         }
     }
     private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
@@ -45,7 +46,7 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
-    fun submitList(list: List<NodeModel>) {
+    fun submitList(list: List<NodeEntity>) {
         differ.submitList(list)
     }
 
@@ -55,7 +56,7 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
         private val interaction: Interaction?
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: NodeModel) = with(itemView) {
+        fun bind(item: NodeEntity) = with(itemView) {
             binding.txtItemRep.text = item!!.name
             setOnClickListener {
                 interaction?.onClicked(item)
@@ -64,6 +65,6 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
     }
 
     interface Interaction {
-        fun onClicked(item: NodeModel)
+        fun onClicked(item: NodeEntity)
     }
 }

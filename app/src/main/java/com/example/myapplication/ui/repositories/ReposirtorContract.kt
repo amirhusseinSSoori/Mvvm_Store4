@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.repositories
 
+import com.example.myapplication.data.db.enity.NodeEntity
 import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.ui.base.UiEffect
 import com.example.myapplication.ui.base.UiEvent
@@ -19,7 +20,7 @@ class ReposirtorContract {
 
     sealed class SendRequestState {
         object Idle : SendRequestState()
-        data class Success(val allData: List<NodeModel>) : SendRequestState()
+        data class Success(val allData: List<NodeEntity>) : SendRequestState()
     }
 
     sealed class Effect : UiEffect {
