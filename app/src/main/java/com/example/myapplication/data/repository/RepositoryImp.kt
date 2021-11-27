@@ -39,7 +39,7 @@ class RepositoryImp @Inject constructor(
                         emit(ApolloResult.Error(result.exception))
                     }
 
-                   emit(ApolloResult.Error(Throwable()))
+//                   emit(ApolloResult.Error(Throwable()))
                 }
                 else -> Unit
 

@@ -19,13 +19,12 @@ class ReposirtorContract {
 
     sealed class SendRequestState {
         object Idle : SendRequestState()
-        data class Loading(var isBoolean:Boolean) : SendRequestState()
         data class Success(val allData: List<NodeModel>) : SendRequestState()
-        data class Error(val message: String) : SendRequestState()
     }
 
     sealed class Effect : UiEffect {
-        data class ShowMessage(val message: String) : Effect()
+        data class ShowMessage(val message: String,val isBoolean: Boolean=false) : Effect()
+        data class ShowLoading(val isBoolean:Boolean) : Effect()
     }
 
 }

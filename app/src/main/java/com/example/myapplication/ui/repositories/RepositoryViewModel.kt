@@ -43,15 +43,16 @@ class RepositoryViewModel @Inject constructor(private val showAllReposirtoryUseC
             showAllReposirtoryUseCase.execute().collect { data ->
                 when (data) {
                     is ApolloResult.Loading -> {
-                        setState { copy(state = ReposirtorContract.SendRequestState.Loading(isBoolean = true)) }
+                        setEffect { ReposirtorContract.Effect.ShowLoading(true) }
                     }
                     is ApolloResult.Success -> {
                         setState { copy(state = ReposirtorContract.SendRequestState.Success(allData = data.data)) }
-                        setState { copy(state = ReposirtorContract.SendRequestState.Loading(isBoolean = false)) }
+                        setEffect { ReposirtorContract.Effect.ShowLoading(false) }
+
                     }
                     is ApolloResult.Error -> {
-                        setEffect { ReposirtorContract.Effect.ShowMessage(data.exception.cause.toString()!!) }
-                        setState { copy(state = ReposirtorContract.SendRequestState.Loading(isBoolean = false)) }
+                        setEffect { ReposirtorContract.Effect.ShowMessage(data.exception.cause.toString()!!,true) }
+                        setEffect { ReposirtorContract.Effect.ShowLoading(false) }
                     }
                     else -> Unit
                 }

@@ -32,14 +32,18 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repositoryAdapter = RepositoryAdapter()
-        lifecycleScope.launchWhenStarted {
+        viewModel.setEvent(ReposirtorContract.Event.OnShowResult)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding = FragmentRepositoryBinding.bind(view)
+        super.onViewCreated(view, savedInstanceState)
+
+        lifecycleScope.launch {
             viewModel.uiState.collect {
                 when (it.state) {
                     is ReposirtorContract.SendRequestState.Idle -> {
                         Log.e("TAG", "onCollectTurnOnRequest:  isIdle")
-                    }
-                    is ReposirtorContract.SendRequestState.Loading -> {
-//                        binding!!.progressBarRepository.isVisible = it.state.isBoolean
                     }
                     is ReposirtorContract.SendRequestState.Success -> {
                         setUpSeriesRecycler(list = it.state.allData)
@@ -48,14 +52,6 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
             }
         }
         sideEffect()
-
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentRepositoryBinding.bind(view)
-        super.onViewCreated(view, savedInstanceState)
-
-        viewModel.setEvent(ReposirtorContract.Event.OnShowResult)
         button()
 
     }
@@ -66,7 +62,11 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
             viewModel.effect.collect {
                 when (it) {
                     is ReposirtorContract.Effect.ShowMessage -> {
-//                        binding.txtRepositoryFShowMessage.isVisible = true
+                        binding!!.txtRepositoryFShowMessage.isVisible = it.isBoolean
+                    }
+
+                    is ReposirtorContract.Effect.ShowLoading -> {
+                        binding!!.progressBarRepository.isVisible = it.isBoolean
                     }
                 }
             }
@@ -76,8 +76,7 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
 
     fun button() {
         binding!!.txtRepositoryFShowMessage.setOnClickListener {
-            findNavController().navigate(R.id.action_repositoryFragment_to_accountFragment)
-//            viewModel.setEvent(ReposirtorContract.Event.OnShowResult)
+            binding!!.txtRepositoryFShowMessage.isVisible = false
         }
     }
 
