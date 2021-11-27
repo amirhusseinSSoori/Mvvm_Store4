@@ -1,4 +1,4 @@
-package com.example.myapplication.data.network.errorHandle
+package com.example.myapplication.domain.exception
 
 import com.apollographql.apollo.api.Error
 

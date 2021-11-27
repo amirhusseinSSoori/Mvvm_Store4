@@ -1,4 +1,4 @@
-package com.example.myapplication.data.network.errorHandle
+package com.example.myapplication.domain.exception
 
 sealed class ApolloResult<out T> {
     class Empty<T> : ApolloResult<T>()

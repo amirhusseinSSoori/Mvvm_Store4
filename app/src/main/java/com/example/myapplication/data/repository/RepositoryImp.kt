@@ -2,9 +2,11 @@ package com.example.myapplication.data.repository
 
 
 import com.example.myapplication.data.mappers.*
-import com.example.myapplication.data.network.errorHandle.ApolloResult
+import com.example.myapplication.domain.exception.ApolloResult
 import com.example.myapplication.data.source.local.LocalSource
 import com.example.myapplication.data.source.remote.RemoteSource
+import com.example.myapplication.domain.model.NodeModel
+import com.example.myapplication.domain.repository.Repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow

@@ -1,7 +1,6 @@
 package com.example.myapplication.data.source.remote
 
-import com.apollographql.apollo.ApolloQueryCall
-import com.example.myapplication.data.network.errorHandle.ApolloResult
+import com.example.myapplication.domain.exception.ApolloResult
 import example.myapplication.GetListQuery
 
 interface RemoteSource {

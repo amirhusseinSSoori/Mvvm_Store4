@@ -6,9 +6,8 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
-import com.example.myapplication.data.mappers.NodeModel
+import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.databinding.RepItemsBinding
-import example.myapplication.GetListQuery
 
 class RepositoryAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

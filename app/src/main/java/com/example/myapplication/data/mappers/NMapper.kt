@@ -3,6 +3,8 @@ package com.example.myapplication.data.mappers
 import com.example.myapplication.data.db.enity.NodeEntity
 import com.example.myapplication.data.db.enity.OwnerEntity
 import com.example.myapplication.data.mappers.base.EntityMapper
+import com.example.myapplication.domain.model.NodeModel
+import com.example.myapplication.domain.model.OwnerModel
 import example.myapplication.GetListQuery
 import javax.inject.Inject
 

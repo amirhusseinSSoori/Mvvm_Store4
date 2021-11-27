@@ -2,15 +2,12 @@ package com.example.myapplication.ui.repositories
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apollographql.apollo.ApolloQueryCall
 
-import com.example.myapplication.data.mappers.NodeModel
-import com.example.myapplication.data.network.errorHandle.ApolloResult
-import com.example.myapplication.data.network.errorHandle.DataSourceException
-import com.example.myapplication.data.repository.Repository
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.myapplication.domain.model.NodeModel
+import com.example.myapplication.domain.exception.ApolloResult
+
+import com.example.myapplication.domain.repository.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import example.myapplication.GetListQuery
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
