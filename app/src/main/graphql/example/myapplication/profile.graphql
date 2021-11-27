@@ -1,0 +1,11 @@
+query profile {
+    viewer {
+        login
+        bio
+        email
+        avatarUrl
+        url
+        createdAt
+        name
+    }
+}

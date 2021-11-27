@@ -9,6 +9,7 @@ import com.example.myapplication.data.db.enity.NodeEntity
 
 import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.databinding.RepItemsBinding
+import com.squareup.picasso.Picasso
 
 class RepositoryAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -57,7 +58,11 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: NodeEntity) = with(itemView) {
-            binding.txtItemRep.text = item!!.name
+            Picasso.get().load(item.ownerEntity!!.avatarUrl).resize(400, 400).into( binding.imgItemRep)
+            binding.imgItemRep
+            binding.txtItemRepName.text = "name : ${item.name}"
+            binding.txtItemRepLogin.text = "login : ${item.ownerEntity!!.login}"
+            binding.txtItemRepAvetar.text = "avetar : ${item.ownerEntity!!.avatarUrl}"
             setOnClickListener {
                 interaction?.onClicked(item)
             }
