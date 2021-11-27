@@ -12,12 +12,21 @@
         <action
             android:id="@+id/action_introFragment_to_repositoryFragment"
             app:destination="@id/repositoryFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/repositoryFragment"
         tools:layout="@layout/fragment_repository"
         android:name="com.example.myapplication.ui.repositories.RepositoryFragment"
-        android:label="RepositoryFragment" />
+        android:label="RepositoryFragment" >
+        <action
+            android:id="@+id/action_repositoryFragment_to_accountFragment"
+            app:destination="@id/accountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.example.myapplication.ui.account.AccountFragment"
+        android:label="AccountFragment" />
 
 
 </navigation>

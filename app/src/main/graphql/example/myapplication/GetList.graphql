@@ -1,7 +1,7 @@
 query GetList{
     viewer {
         login
-        repositories(first: 50)
+        repositories(first: 25)
         {nodes{
             name
             owner {

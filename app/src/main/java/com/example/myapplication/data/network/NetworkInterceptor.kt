@@ -8,7 +8,7 @@ class NetworkInterceptor @Inject constructor(): Interceptor {
     override fun intercept(chain: Interceptor.Chain?): Response {
         return chain!!.proceed(
             chain.request().newBuilder()
-                .header("Authorization", "Bearer " + "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")
+                .header("Authorization", "Bearer " + "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")
                 .build()
         )
     }
