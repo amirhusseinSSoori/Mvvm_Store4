@@ -19,9 +19,7 @@ import javax.inject.Inject
 class RepositoryViewModel @Inject constructor(private val showAllReposirtoryUseCase: ShowAllRepositoryUseCase) :
     BaseViewModel<ReposirtorContract.Event, ReposirtorContract.State, ReposirtorContract.Effect>() {
 
-    init {
-        handleEvent(ReposirtorContract.Event.OnShowResult)
-    }
+
     override fun createInitialState(): ReposirtorContract.State {
         return ReposirtorContract.State(
             ReposirtorContract.SendRequestState.Idle

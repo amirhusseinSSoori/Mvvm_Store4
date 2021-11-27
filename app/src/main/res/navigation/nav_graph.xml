@@ -21,6 +21,7 @@
         android:label="RepositoryFragment" >
         <action
             android:id="@+id/action_repositoryFragment_to_accountFragment"
+            app:popUpToInclusive="true"
             app:destination="@id/accountFragment" />
     </fragment>
     <fragment

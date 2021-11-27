@@ -26,20 +26,20 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
 
     private val viewModel: RepositoryViewModel by viewModels()
     private lateinit var repositoryAdapter: RepositoryAdapter
-     var binding: FragmentRepositoryBinding ?=null
+    var binding: FragmentRepositoryBinding? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repositoryAdapter = RepositoryAdapter()
-        lifecycleScope.launchWhenResumed {
+        lifecycleScope.launchWhenStarted {
             viewModel.uiState.collect {
                 when (it.state) {
                     is ReposirtorContract.SendRequestState.Idle -> {
                         Log.e("TAG", "onCollectTurnOnRequest:  isIdle")
                     }
                     is ReposirtorContract.SendRequestState.Loading -> {
-                       binding!!.progressBarRepository.isVisible = it.state.isBoolean
+//                        binding!!.progressBarRepository.isVisible = it.state.isBoolean
                     }
                     is ReposirtorContract.SendRequestState.Success -> {
                         setUpSeriesRecycler(list = it.state.allData)
@@ -59,8 +59,6 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         button()
 
     }
-
-
 
 
     private fun sideEffect() {
@@ -91,7 +89,7 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
 
     override fun onDestroy() {
         super.onDestroy()
-        binding=null
+        binding = null
     }
 
 
