@@ -43,33 +43,6 @@ class NMapper  @Inject constructor(): EntityMapper<GetListQuery.Node, NodeEntity
 
 
 }
-fun mapFromModelList(entities: List<GetListQuery.Node>): List<NodeModel> {
-    return entities.map { it.mapTo() }
-}
-fun GetListQuery.Data.mapToDomainModel() = mapFromModelList(viewer!!.repositories.nodes as List<GetListQuery.Node>)
 
 
-fun GetListQuery.Node.mapTo() = NodeModel(
-    name = name,
-    owner = OwnerModel(
-        login = owner.login,
-        avatarUrl = owner.avatarUrl.toString(),
-        url = owner.url.toString()
-    )
-)
-fun maptoEntityModel(entities: List<NodeEntity>): List<NodeModel> {
-    return entities.map { mapToModel(it) }
-}
-
-fun mapToModel(domainModel: NodeEntity): NodeModel {
-    return NodeModel(
-        name = domainModel.name!!,
-        owner = OwnerModel(
-            avatarUrl = domainModel.name,
-            login =domainModel.ownerEntity!!.login!!,
-            url = domainModel.ownerEntity.url!!
-        )
-
-    )
-}
 

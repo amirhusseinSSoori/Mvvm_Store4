@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface GithubDao {
     @Insert
-    suspend fun insert(news: List<NodeEntity>)
+    suspend fun insert(node: List<NodeEntity>)
 
     @Query("SELECT * FROM nodeEntity")
     fun getListRepository(): Flow<List<NodeEntity>>

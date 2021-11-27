@@ -21,7 +21,9 @@
         android:layout_height="30dp"
         android:gravity="center"
         android:visibility="visible"
-        android:text="مشکلی ب وجود امده است دوباره سعی کنید"
+        android:background="@android:color/holo_red_dark"
+        android:textColor="@color/white"
+        android:text="@string/txt_repositroyF_retry"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

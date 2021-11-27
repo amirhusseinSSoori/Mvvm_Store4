@@ -11,7 +11,7 @@ import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.databinding.RepItemsBinding
 import com.squareup.picasso.Picasso
 
-class RepositoryAdapter(private val interaction: Interaction? = null) :
+class RepositoryAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NodeEntity?>() {
@@ -33,7 +33,7 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = RepItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieViewHolder(binding, interaction)
+        return MovieViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -54,22 +54,17 @@ class RepositoryAdapter(private val interaction: Interaction? = null) :
     class MovieViewHolder
     constructor(
         private val binding: RepItemsBinding,
-        private val interaction: Interaction?
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: NodeEntity) = with(itemView) {
             Picasso.get().load(item.ownerEntity!!.avatarUrl).resize(400, 400).into( binding.imgItemRep)
             binding.imgItemRep
-            binding.txtItemRepName.text = "name : ${item.name}"
-            binding.txtItemRepLogin.text = "login : ${item.ownerEntity!!.login}"
-            binding.txtItemRepAvetar.text = "avetar : ${item.ownerEntity!!.avatarUrl}"
-            setOnClickListener {
-                interaction?.onClicked(item)
-            }
+            binding.txtItemRepName.text = item.name
+            binding.txtItemRepLogin.text = item.ownerEntity!!.login
+            binding.txtItemRepAvetar.text = item.ownerEntity!!.avatarUrl
+
         }
     }
 
-    interface Interaction {
-        fun onClicked(item: NodeEntity)
-    }
+
 }
