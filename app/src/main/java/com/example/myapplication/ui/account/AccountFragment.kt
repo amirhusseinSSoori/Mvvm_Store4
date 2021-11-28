@@ -3,7 +3,6 @@ package com.example.myapplication.ui.account
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -33,7 +32,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBind
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        showProfile()
+        initObserve()
 
 
         binding.txtAccountProfileFShowMessage.setOnClickListener {
@@ -45,7 +44,7 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBind
         }
     }
 
-    private fun showProfile() {
+    private fun initObserve() {
         lifecycleScope.launchWhenStarted {
             viewModel.uiState.collect {
                 when (it.state) {
