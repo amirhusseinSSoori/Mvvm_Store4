@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentAccountBinding
+import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.util.setImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -16,11 +17,10 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class AccountFragment : Fragment(R.layout.fragment_account) {
+class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBinding::inflate) {
 
 
     private val viewModel: AccountViewModel by viewModels()
-    lateinit var binding: FragmentAccountBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,28 +29,24 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         sideEffect()
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentAccountBinding.bind(view)
         super.onViewCreated(view, savedInstanceState)
 
+        showProfile()
 
 
-        initObserve()
-
-        binding!!.txtAccountProfileFShowMessage.setOnClickListener {
+        binding.txtAccountProfileFShowMessage.setOnClickListener {
             viewModel.setEvent(AccountContract.Event.EventProfile)
         }
 
         binding.btnAccountFNavigation.setOnClickListener {
             findNavController().navigate(R.id.repositoryFragment)
         }
-
-
     }
 
-
-    private fun initObserve() {
-        lifecycleScope.launch {
+    private fun showProfile() {
+        lifecycleScope.launchWhenStarted {
             viewModel.uiState.collect {
                 when (it.state) {
                     is AccountContract.ProfileState.Idle -> Unit
@@ -67,6 +63,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
                         }
 
+
                     }
                 }
             }
@@ -74,12 +71,12 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     }
 
     private fun sideEffect() {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launch {
             viewModel.effect.collect {
                 when (it) {
                     is AccountContract.Effect.ShowMessage -> {
                         binding.txtAccountProfileFShowMessage.apply {
-                            isVisible = it.isBoolean
+                            isVisible = it.Active
                             text = it.message
                         }
                     }

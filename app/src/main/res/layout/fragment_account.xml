@@ -34,6 +34,7 @@
         android:layout_height="@dimen/HeightTextAccountF"
         android:layout_marginTop="@dimen/MarginTextAccountF"
         android:gravity="center"
+        android:fontFamily="@font/iransanse_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_accountProfileF_showImage" />
@@ -43,6 +44,7 @@
         android:layout_height="@dimen/HeightTextAccountF"
         android:layout_marginTop="@dimen/MarginTextAccountF"
         android:gravity="center"
+        android:fontFamily="@font/iransanse_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_accountProfileF_name" />

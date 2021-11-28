@@ -10,7 +10,6 @@
         android:id="@+id/img_itemRep"
         android:layout_width="@dimen/imgProfileItem"
         android:layout_height="@dimen/imgProfileItem"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,6 +20,7 @@
         android:layout_height="@dimen/HeightTextAccountF"
         android:layout_marginTop="5dp"
         android:gravity="center"
+        android:fontFamily="@font/iransanse_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_itemRep"
         app:layout_constraintTop_toTopOf="@+id/img_itemRep" />
@@ -30,6 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/HeightTextAccountF"
         android:gravity="center"
+        android:fontFamily="@font/iransanse_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_itemRep"
         app:layout_constraintTop_toBottomOf="@+id/txt_itemRep_name" />
@@ -39,6 +40,7 @@
         android:layout_width="0dp"
         android:layout_height="@dimen/HeightTextAccountF"
         android:gravity="center"
+        android:fontFamily="@font/iransanse_medium"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_itemRep"
         app:layout_constraintTop_toBottomOf="@+id/txt_itemRep_login" />

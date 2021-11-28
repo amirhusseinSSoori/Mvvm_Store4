@@ -23,6 +23,7 @@
         android:layout_height="30dp"
         android:gravity="center"
         android:visibility="invisible"
+        android:fontFamily="@font/iransanse_medium"
         android:background="@android:color/holo_red_dark"
         android:textColor="@color/white"
         android:text="@string/txt_repositroyF_retry"

@@ -22,7 +22,7 @@ class AccountContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowMessage(val message: String =EMPTY_STRING, val isBoolean: Boolean = false) : Effect()
+        data class ShowMessage(val message: String =EMPTY_STRING, val Active: Boolean = false) : Effect()
         data class ShowLoading(val Active: Boolean) : Effect()
     }
 

@@ -12,7 +12,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
+import com.example.myapplication.databinding.FragmentAccountBinding
 import com.example.myapplication.databinding.FragmentIntroBinding
+import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.util.explosion
 import com.example.myapplication.util.startAnimation
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,12 +23,9 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 
 @AndroidEntryPoint
-class IntroFragment : Fragment(R.layout.fragment_intro) {
-    lateinit var binding: FragmentIntroBinding
+class IntroFragment : BaseFragment<FragmentIntroBinding>(FragmentIntroBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding = FragmentIntroBinding.bind(view)
-
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
@@ -52,7 +51,6 @@ class IntroFragment : Fragment(R.layout.fragment_intro) {
                 }
             }
             delay(3000)
-
             findNavController().navigate(R.id.action_introFragment_to_repositoryFragment)
         }
 
