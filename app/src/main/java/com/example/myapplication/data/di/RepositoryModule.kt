@@ -1,7 +1,7 @@
 package com.example.myapplication.data.di
 
 
-import com.example.myapplication.data.Rep.ProfileRepositoryImp
+import com.example.myapplication.data.Rep.AccountRepositoryImp
 import com.example.myapplication.data.Rep.RepositoryImp
 import com.example.myapplication.domain.repository.ProfileRepositry
 
@@ -19,7 +19,7 @@ interface RepositoryModule {
     @Binds
     fun provideRepository(repositoryImp: RepositoryImp): Repository
     @Binds
-    fun provideProfileRepository(profileRepositoryImp: ProfileRepositoryImp): ProfileRepositry
+    fun provideProfileRepository(profileRepositoryImp: AccountRepositoryImp): ProfileRepositry
 }
 
 

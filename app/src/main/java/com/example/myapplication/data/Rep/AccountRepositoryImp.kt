@@ -4,19 +4,21 @@ import com.apollographql.apollo.api.Response
 import com.dropbox.android.external.store4.*
 import com.example.myapplication.common.Constance
 import com.example.myapplication.data.DispatcherProvider
-import com.example.myapplication.data.db.entity.NodeEntity
+
 import com.example.myapplication.data.db.entity.ProfileEntity
-import com.example.myapplication.data.mappers.mapEntityListToModelList
-import com.example.myapplication.data.mappers.mapListServerToEntity
+
 import com.example.myapplication.data.mappers.mapToProfile
 import com.example.myapplication.data.mappers.mapToProfileModel
-import com.example.myapplication.data.source.local.LocalSource
+import com.example.myapplication.data.source.local.account.AccountLocalSource
 import com.example.myapplication.data.source.remote.RemoteSource
 import com.example.myapplication.domain.exption.SSOTResult
-import com.example.myapplication.domain.model.NodeModel
+import com.example.myapplication.domain.exption.errorCode
+
+
 import com.example.myapplication.domain.model.ProfileModel
 import com.example.myapplication.domain.repository.ProfileRepositry
-import example.myapplication.GetListQuery
+
+
 import example.myapplication.ProfileQuery
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -24,9 +26,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class ProfileRepositoryImp @Inject constructor(
+class AccountRepositoryImp @Inject constructor(
     val network: RemoteSource,
-    val local: LocalSource,
+    val local: AccountLocalSource,
     val dispatcher: DispatcherProvider
 ) : ProfileRepositry {
 
@@ -36,17 +38,17 @@ class ProfileRepositoryImp @Inject constructor(
             network.getProfileFromNetwork()
         },
         sourceOfTruth = SourceOfTruth.Companion.of(
-            reader = { local.getProfileRepository() },
+            reader = { local.getAccountRepository() },
             writer = { _, input: Response<ProfileQuery.Data> ->
                 input.data?.let {
-                    local.updateProfileRepository(it.mapToProfile ())
+                    local.updateAccountRepository(it.mapToProfile())
                 }
             }
         )
     ).build()
 
 
-    override suspend fun getLatestProfile(): Flow<SSOTResult<ProfileModel>> {
+    override suspend fun getDetailsOfProfile(): Flow<SSOTResult<ProfileModel>> {
         return flow {
             getStore().stream(StoreRequest.cached(key = Constance.KeyAccount, refresh = true))
                 .flowOn(dispatcher.io)
@@ -56,8 +58,9 @@ class ProfileRepositoryImp @Inject constructor(
                             emit(SSOTResult.loading<ProfileModel>())
                         }
                         is StoreResponse.Error -> {
-                            emit(SSOTResult.error<ProfileModel>())
 
+
+                            emit(SSOTResult.error<ProfileModel>(msg = response.errorMessageOrNull()))
                         }
                         is StoreResponse.Data -> {
                             emit(SSOTResult.success(response.value.mapToProfileModel()))

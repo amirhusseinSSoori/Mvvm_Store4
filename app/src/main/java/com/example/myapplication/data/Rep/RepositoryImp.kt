@@ -9,7 +9,7 @@ import com.example.myapplication.data.db.entity.NodeEntity
 
 
 import com.example.myapplication.data.mappers.*
-import com.example.myapplication.data.source.local.LocalSource
+import com.example.myapplication.data.source.local.repository.RepositoriesLocalSourceImp
 import com.example.myapplication.data.source.remote.RemoteSource
 import com.example.myapplication.domain.exption.SSOTResult
 import com.example.myapplication.domain.model.NodeModel
@@ -17,7 +17,6 @@ import com.example.myapplication.domain.repository.Repository
 
 
 import example.myapplication.GetListQuery
-import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -26,7 +25,7 @@ import javax.inject.Inject
 
 class RepositoryImp @Inject constructor(
     val network: RemoteSource,
-    val local: LocalSource,
+    val local: RepositoriesLocalSourceImp,
     val dispatcher: DispatcherProvider
 ) : Repository {
     // https://github.com/dropbox/Store
@@ -54,7 +53,10 @@ class RepositoryImp @Inject constructor(
                             emit(SSOTResult.loading<List<NodeModel>>())
                         }
                         is StoreResponse.Error -> {
-                            emit(SSOTResult.error<List<NodeModel>>())
+                            Exception()
+
+
+                            emit(SSOTResult.error<List<NodeModel>>(msg = response.errorMessageOrNull()))
                         }
                         is StoreResponse.Data -> {
                             emit(SSOTResult.success(response.value.mapEntityListToModelList()))

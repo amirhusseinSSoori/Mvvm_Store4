@@ -37,7 +37,9 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
         initObserve()
 
-
+        binding!!.txtAccountProfileFShowMessage.setOnClickListener {
+            viewModel.setEvent(AccountContract.Event.EventProfile)
+        }
 
         binding.btnAccountFNavigation.setOnClickListener {
             findNavController().navigate(R.id.repositoryFragment)
@@ -82,7 +84,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                         }
                     }
                     is AccountContract.Effect.ShowLoading -> {
-                        binding.progressBarAccount.isVisible = it.isBoolean
+                        binding.progressBarAccount.isVisible = it.Active
                     }
                 }
             }

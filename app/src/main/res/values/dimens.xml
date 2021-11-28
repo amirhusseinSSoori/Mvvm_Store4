@@ -3,4 +3,13 @@
 
      //intro Fragment
     <dimen name="icon">40dp</dimen>
+    //Account Fragment
+    <dimen name="imgProfile">110dp</dimen>
+    <dimen name="TopFromImgProfile">30dp</dimen>
+    <dimen name="HeightTextAccountF">20dp</dimen>
+    <dimen name="MarginTextAccountF">15dp</dimen>
+    <dimen name="ProgressBarSize">50dp</dimen>
+    <dimen name="ButtomNavigation">150dp</dimen>
+    <dimen name="imgProfileItem">90dp</dimen>
+    <dimen name="HeightProfileItem">90dp</dimen>
 </resources>

@@ -2,6 +2,7 @@ package com.example.myapplication.ui.account
 
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.common.Constance
+import com.example.myapplication.common.Constance.EMPTY_STRING
 import com.example.myapplication.common.Constance.Problem
 import com.example.myapplication.domain.interactor.account.ShowAccountDetailsUseCase
 import com.example.myapplication.ui.base.BaseViewModel
@@ -34,14 +35,14 @@ class AccountViewModel @Inject constructor(private val showAccountDetailsUseCase
             showAccountDetailsUseCase.execute().collect { result ->
                 if (result.isSuccess()) {
 
-                   
+
                     if (result.data == null) {
                         setEffect { AccountContract.Effect.ShowLoading(false) }
                     } else {
                         setState { copy(state = AccountContract.ProfileState.DetailsProfileState(profile = result.data)) }
                         setEffect { AccountContract.Effect.ShowLoading(false) }
                         setEffect {
-                            AccountContract.Effect.ShowMessage(Problem, false)
+                            AccountContract.Effect.ShowMessage(EMPTY_STRING, false)
                         }
                     }
                 } else if (result.isLoading()) {

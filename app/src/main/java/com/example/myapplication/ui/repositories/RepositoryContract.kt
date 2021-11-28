@@ -1,16 +1,15 @@
 package com.example.myapplication.ui.repositories
 
+import com.example.myapplication.common.Constance.EMPTY_STRING
 import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.ui.base.UiEffect
 import com.example.myapplication.ui.base.UiEvent
 import com.example.myapplication.ui.base.UiState
 
-class ReposirtorContract {
+class RepositoryContract {
 
     sealed class Event : UiEvent {
-
-        object OnShowResult : Event()
-        object HandelError : Event()
+        object EventRepository : Event()
     }
 
     data class State(
@@ -23,8 +22,8 @@ class ReposirtorContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowMessage(val message: String = " ", val isBoolean: Boolean = false) : Effect()
-        data class ShowLoading(val isBoolean: Boolean) : Effect()
+        data class ShowMessage(val message: String = EMPTY_STRING, val Active: Boolean = false) : Effect()
+        data class ShowLoading(val Active: Boolean) : Effect()
     }
 
 }

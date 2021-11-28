@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.myapplication.common.Constance.DbName
 import com.example.myapplication.data.db.MyDataBase
+import com.example.myapplication.data.db.dao.AccountDao
 import com.example.myapplication.data.db.dao.GithubDao
 import dagger.Module
 import dagger.Provides
@@ -32,7 +33,12 @@ object LocalModule {
 
     @Singleton
     @Provides
-    fun provideMyDAO(myDataBase: MyDataBase): GithubDao {
+    fun provideRepDAO(myDataBase: MyDataBase): GithubDao {
         return myDataBase.githubDao()
+    }
+    @Singleton
+    @Provides
+    fun provideGithubDAO(myDataBase: MyDataBase): AccountDao {
+        return myDataBase.accountDao()
     }
 }

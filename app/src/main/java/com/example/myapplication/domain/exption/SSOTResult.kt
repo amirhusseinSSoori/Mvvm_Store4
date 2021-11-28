@@ -2,7 +2,7 @@ package com.example.myapplication.domain.exption
 
 import androidx.annotation.NonNull
 
-data class SSOTResult<T>(val status: Int, val data: T?) {
+data class SSOTResult<T>(val status: Int, val data: T?,val msg: String?=null) {
     fun isError() = status == STATUS_ERROR
     fun isLoading() = status == STATUS_LOADING
     fun isSuccess() = status == STATUS_SUCCESS
@@ -22,8 +22,8 @@ data class SSOTResult<T>(val status: Int, val data: T?) {
         /**
          * Helper method to create error state Result. Error state might also have the current data, if any
          */
-        fun <T> error(item: T? = null): SSOTResult<T> {
-            return SSOTResult(STATUS_ERROR, item)
+        fun <T> error(item: T? = null,msg:String?=null): SSOTResult<T> {
+            return SSOTResult(STATUS_ERROR, null,msg)
         }
 
         /**

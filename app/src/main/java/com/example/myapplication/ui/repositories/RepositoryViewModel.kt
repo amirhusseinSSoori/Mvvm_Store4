@@ -15,18 +15,18 @@ import javax.inject.Inject
 @HiltViewModel
 class RepositoryViewModel @Inject constructor(
     private val showAllRepository: ShowAllRepositoryUseCase
-) : BaseViewModel<ReposirtorContract.Event, ReposirtorContract.State, ReposirtorContract.Effect>() {
+) : BaseViewModel<RepositoryContract.Event, RepositoryContract.State, RepositoryContract.Effect>() {
 
 
-    override fun createInitialState(): ReposirtorContract.State {
-        return ReposirtorContract.State(
-            ReposirtorContract.RepositoriesState.Idle
+    override fun createInitialState(): RepositoryContract.State {
+        return RepositoryContract.State(
+            RepositoryContract.RepositoriesState.Idle
         )
     }
 
-    override fun handleEvent(event: ReposirtorContract.Event) {
+    override fun handleEvent(event: RepositoryContract.Event) {
         when (event) {
-            is ReposirtorContract.Event.OnShowResult -> {
+            is RepositoryContract.Event.EventRepository -> {
                 showAllRepositories()
             }
             else -> Unit
@@ -39,21 +39,21 @@ class RepositoryViewModel @Inject constructor(
             showAllRepository.execute().collect { result ->
                 if (result.isSuccess()) {
                     if (result.data.isNullOrEmpty()) {
-                        setEffect { ReposirtorContract.Effect.ShowLoading(false) }
+                        setEffect { RepositoryContract.Effect.ShowLoading(false) }
                     } else {
-                        setState { copy(state = ReposirtorContract.RepositoriesState.AllRepositoriesState(repositories = result.data)) }
-                        setEffect { ReposirtorContract.Effect.ShowLoading(false) }
+                        setState { copy(state = RepositoryContract.RepositoriesState.AllRepositoriesState(repositories = result.data)) }
+                        setEffect { RepositoryContract.Effect.ShowLoading(false) }
                         setEffect {
-                            ReposirtorContract.Effect.ShowMessage(Problem, false)
+                            RepositoryContract.Effect.ShowMessage(Problem, false)
                         }
                     }
                 } else if (result.isLoading()) {
-                    setEffect { ReposirtorContract.Effect.ShowLoading(true) }
+                    setEffect { RepositoryContract.Effect.ShowLoading(true) }
                 } else {
                     setEffect {
-                        ReposirtorContract.Effect.ShowMessage(Problem, true)
+                        RepositoryContract.Effect.ShowMessage(Problem, true)
                     }
-                    setEffect { ReposirtorContract.Effect.ShowLoading(false) }
+                    setEffect { RepositoryContract.Effect.ShowLoading(false) }
                 }
             }
         }

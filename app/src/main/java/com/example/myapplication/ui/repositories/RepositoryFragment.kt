@@ -27,7 +27,7 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repositoryAdapter = RepositoryAdapter()
-        viewModel.setEvent(ReposirtorContract.Event.OnShowResult)
+        viewModel.setEvent(RepositoryContract.Event.EventRepository)
         sideEffect()
     }
 
@@ -37,7 +37,7 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         initObserve()
 
         binding!!.txtRepositoryFShowMessage.setOnClickListener {
-            viewModel.setEvent(ReposirtorContract.Event.OnShowResult)
+            viewModel.setEvent(RepositoryContract.Event.EventRepository)
         }
 
     }
@@ -46,8 +46,8 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         lifecycleScope.launch {
             viewModel.uiState.collect {
                 when (it.state) {
-                    is ReposirtorContract.RepositoriesState.Idle -> Unit
-                    is ReposirtorContract.RepositoriesState.AllRepositoriesState -> {
+                    is RepositoryContract.RepositoriesState.Idle -> Unit
+                    is RepositoryContract.RepositoriesState.AllRepositoriesState -> {
                         setUpSeriesRecycler(list = it.state.repositories)
                     }
                 }
@@ -60,14 +60,14 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         lifecycleScope.launchWhenStarted {
             viewModel.effect.collect {
                 when (it) {
-                    is ReposirtorContract.Effect.ShowMessage -> {
+                    is RepositoryContract.Effect.ShowMessage -> {
                         binding!!.txtRepositoryFShowMessage.apply {
-                            isVisible = it.isBoolean
+                            isVisible = it.Active
                             text = it.message
                         }
                     }
-                    is ReposirtorContract.Effect.ShowLoading -> {
-                        binding!!.progressBarRepository.isVisible = it.isBoolean
+                    is RepositoryContract.Effect.ShowLoading -> {
+                        binding!!.progressBarRepository.isVisible = it.Active
                     }
                 }
             }

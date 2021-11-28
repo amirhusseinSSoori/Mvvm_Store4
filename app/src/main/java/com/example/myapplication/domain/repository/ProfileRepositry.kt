@@ -10,6 +10,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface ProfileRepositry {
 
-    suspend fun getLatestProfile(): Flow<SSOTResult<ProfileModel>>
+    suspend fun getDetailsOfProfile(): Flow<SSOTResult<ProfileModel>>
     fun getStore(): Store<String, ProfileEntity>
 }
