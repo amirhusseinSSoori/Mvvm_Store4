@@ -53,9 +53,7 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         lifecycleScope.launch {
             viewModel.uiState.collect {
                 when (it.state) {
-                    is ReposirtorContract.SendRequestState.Idle -> {
-
-                    }
+                    is ReposirtorContract.SendRequestState.Idle -> Unit
                     is ReposirtorContract.SendRequestState.Success -> {
                         setUpSeriesRecycler(list = it.state.allData)
                     }
@@ -70,9 +68,11 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
             viewModel.effect.collect {
                 when (it) {
                     is ReposirtorContract.Effect.ShowMessage -> {
-                        binding!!.txtRepositoryFShowMessage.isVisible = it.isBoolean
+                        binding!!.txtRepositoryFShowMessage.apply {
+                            isVisible = it.isBoolean
+                            text = it.message
+                        }
                     }
-
                     is ReposirtorContract.Effect.ShowLoading -> {
                         binding!!.progressBarRepository.isVisible = it.isBoolean
                     }

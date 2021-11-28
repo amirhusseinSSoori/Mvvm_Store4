@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:gravity="center"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:background="@android:color/holo_red_dark"
         android:textColor="@color/white"
         android:text="@string/txt_repositroyF_retry"

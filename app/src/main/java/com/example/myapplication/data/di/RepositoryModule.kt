@@ -17,8 +17,8 @@ import kotlinx.coroutines.Dispatchers
 object RepositoryModule {
 
     @Provides
-    fun provideRepository(source: RemoteSource,localSource: LocalSource,mapper: NMapper): Repository {
-        return RepositoryImp(source,localSource,mapper)
+    fun provideRepository(source: RemoteSource,localSource: LocalSource,mapper: NMapper,dispatcher: DispatcherProvider): Repository {
+        return RepositoryImp(source,localSource,mapper,dispatcher)
     }
 
     @Provides

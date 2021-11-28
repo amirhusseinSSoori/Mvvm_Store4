@@ -24,8 +24,8 @@ class ReposirtorContract {
     }
 
     sealed class Effect : UiEffect {
-        data class ShowMessage(val message: String,val isBoolean: Boolean=false) : Effect()
-        data class ShowLoading(val isBoolean:Boolean) : Effect()
+        data class ShowMessage(val message: String = " ", val isBoolean: Boolean = false) : Effect()
+        data class ShowLoading(val isBoolean: Boolean) : Effect()
     }
 
 }

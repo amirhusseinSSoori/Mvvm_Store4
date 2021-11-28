@@ -10,5 +10,5 @@ import javax.inject.Inject
 class ShowAllRepositoryUseCase @Inject constructor(
     private val appRepository: Repository
 ) {
-     fun execute() = appRepository.getStore()
+     suspend fun execute() = appRepository.getLatestNews()
 }

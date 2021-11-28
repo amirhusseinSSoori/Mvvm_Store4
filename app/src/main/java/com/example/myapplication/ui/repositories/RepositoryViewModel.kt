@@ -1,6 +1,8 @@
 package com.example.myapplication.ui.repositories
 
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dropbox.android.external.store4.ResponseOrigin
@@ -39,39 +41,35 @@ class RepositoryViewModel @Inject constructor(
     override fun handleEvent(event: ReposirtorContract.Event) {
         when (event) {
             is ReposirtorContract.Event.OnShowResult -> {
-                getLatestRep()
+                initListeners()
             }
             else -> Unit
         }
     }
 
 
-    private  fun getLatestRep() {
+    private fun initListeners() {
         viewModelScope.launch {
-            showAllReposirtoryUseCase.execute()
-            .stream(StoreRequest.cached(key = "item", refresh = true))
-            .flowOn(dispatcher.io())
-            .collect { response: StoreResponse<List<NodeEntity>> ->
-                when (response) {
-                    is StoreResponse.Loading -> {
-                        setEffect { ReposirtorContract.Effect.ShowLoading(true) }
-                    }
-                    is StoreResponse.Error -> {
-                        if (response.origin == ResponseOrigin.Fetcher) setEffect { ReposirtorContract.Effect.ShowMessage(response.origin.name!!,true) }
+            showAllReposirtoryUseCase.execute().collect { result ->
+                if (result.isSuccess()) {
+                    if (result.data.isNullOrEmpty()) {
                         setEffect { ReposirtorContract.Effect.ShowLoading(false) }
-                    }
-                    is StoreResponse.Data -> {
-
-                        setState { copy(state = ReposirtorContract.SendRequestState.Success(allData = response.value)) }
+                    } else {
+                        setState { copy(state = ReposirtorContract.SendRequestState.Success(allData = result.data)) }
                         setEffect { ReposirtorContract.Effect.ShowLoading(false) }
-                        setEffect { ReposirtorContract.Effect.ShowMessage(response.origin.name!!,false) }
+                        setEffect {
+                            ReposirtorContract.Effect.ShowMessage("Have Problem", false)
+                        }
                     }
-
-
-                    else -> Unit
+                } else if (result.isLoading()) {
+                    setEffect { ReposirtorContract.Effect.ShowLoading(true) }
+                } else {
+                    setEffect {
+                        ReposirtorContract.Effect.ShowMessage("Have Problem", true)
+                    }
+                    setEffect { ReposirtorContract.Effect.ShowLoading(false) }
                 }
             }
-
         }
     }
 
