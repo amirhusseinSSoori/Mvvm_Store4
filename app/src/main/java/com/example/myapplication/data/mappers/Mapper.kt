@@ -1,8 +1,8 @@
 package com.example.myapplication.data.mappers
 
 import com.example.myapplication.common.Constance.EMPTY_STRING
-import com.example.myapplication.data.db.enity.NodeEntity
-import com.example.myapplication.data.db.enity.OwnerEntity
+import com.example.myapplication.data.db.entity.NodeEntity
+import com.example.myapplication.data.db.entity.OwnerEntity
 import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.domain.model.OwnerModel
 import example.myapplication.GetListQuery
@@ -18,8 +18,8 @@ fun NodeEntity.mapEntityToModel(): NodeModel {
         name = name!!,
         owner = OwnerModel(
             avatarUrl = ownerEntity!!.avatarUrl,
-            login = ownerEntity.login!!,
-            url = ownerEntity.url!!
+            login = ownerEntity.login,
+            url = ownerEntity.url
         )
 
     )

@@ -1,8 +1,6 @@
-package com.example.myapplication.data.db.enity
+package com.example.myapplication.data.db.entity
 
-import androidx.room.Embedded
 import androidx.room.Entity
-import example.myapplication.GetListQuery
 
 @Entity(tableName = "nodeEntity", primaryKeys = ["id"])
 data class NodeEntity(

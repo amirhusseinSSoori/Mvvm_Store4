@@ -5,12 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.data.db.enity.NodeEntity
 
 import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.databinding.RepItemsBinding
 import com.example.myapplication.util.setImage
-import com.squareup.picasso.Picasso
 
 class RepositoryAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

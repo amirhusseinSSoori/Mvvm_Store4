@@ -1,7 +1,4 @@
-package com.example.myapplication.data.db.enity
-
-import androidx.room.Entity
-import androidx.room.PrimaryKey
+package com.example.myapplication.data.db.entity
 
 
 data class OwnerEntity(

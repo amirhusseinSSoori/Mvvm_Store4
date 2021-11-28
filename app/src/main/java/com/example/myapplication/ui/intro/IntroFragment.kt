@@ -17,38 +17,47 @@ import com.example.myapplication.util.explosion
 import com.example.myapplication.util.startAnimation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 
 @AndroidEntryPoint
 class IntroFragment : Fragment(R.layout.fragment_intro) {
     lateinit var binding: FragmentIntroBinding
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding = FragmentIntroBinding.bind(view)
+
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            val a = async {
-                binding.apply {
-                    viewIntroFExplosion.let { explorer ->
-                        explorer.isVisible = true
-                        explorer.startAnimation(
-                            Pair(
+
+
+            binding.apply {
+                viewIntroFExplosion.let { explorer ->
+                    explorer.isVisible = true
+                    explorer.startAnimation(
+                        Pair(
+                            requireContext(),
+                            R.anim.explosion_anim
+                        ).explosion()
+                    ) {
+                        frameIntroFContainerAnim.setBackgroundColor(
+                            ContextCompat.getColor(
                                 requireContext(),
-                                R.anim.explosion_anim
-                            ).explosion()
-                        ) {
-                            frameIntroFContainerAnim.setBackgroundColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.white
-                                )
+                                R.color.white
                             )
-                            explorer.isVisible = false
-                        }
+                        )
+                        explorer.isVisible = false
                     }
                 }
             }
             delay(3000)
+
             findNavController().navigate(R.id.action_introFragment_to_repositoryFragment)
         }
-    }
+
+
+
+    
+}
 }

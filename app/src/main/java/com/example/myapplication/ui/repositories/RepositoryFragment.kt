@@ -1,23 +1,16 @@
 package com.example.myapplication.ui.repositories
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.example.myapplication.R
-import com.example.myapplication.data.db.enity.NodeEntity
 
 import com.example.myapplication.domain.model.NodeModel
 
 import com.example.myapplication.databinding.FragmentRepositoryBinding
-import com.example.myapplication.ui.base.BaseFragment
 import com.example.myapplication.ui.repositories.adabter.RepositoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect

@@ -1,8 +1,7 @@
 package com.example.myapplication.data.db.dao
 
-import android.provider.SyncStateContract.Helpers.insert
 import androidx.room.*
-import com.example.myapplication.data.db.enity.NodeEntity
+import com.example.myapplication.data.db.entity.NodeEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -13,7 +12,6 @@ interface GithubDao {
 
     @Query("SELECT * FROM nodeEntity")
     fun getListRepository(): Flow<List<NodeEntity>>
-
 
     @Query("DELETE  FROM nodeEntity")
     suspend fun deleteAll()

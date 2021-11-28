@@ -1,6 +1,5 @@
 package com.example.myapplication.ui.repositories
 
-import com.example.myapplication.data.db.enity.NodeEntity
 import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.ui.base.UiEffect
 import com.example.myapplication.ui.base.UiEvent

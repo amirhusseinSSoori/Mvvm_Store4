@@ -2,9 +2,9 @@ package com.example.myapplication.ui.repositories
 
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.common.Constance.Problem
+import com.example.myapplication.domain.interactor.allRepository.ShowAllRepositoryUseCase
 
 
-import com.example.myapplication.domain.useCase.allRepository.ShowAllRepositoryUseCase
 import com.example.myapplication.ui.base.BaseViewModel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RepositoryViewModel @Inject constructor(
-    private val showAllReposirtoryUseCase: ShowAllRepositoryUseCase
+    private val showAllRepository: ShowAllRepositoryUseCase
 ) : BaseViewModel<ReposirtorContract.Event, ReposirtorContract.State, ReposirtorContract.Effect>() {
 
 
@@ -27,16 +27,16 @@ class RepositoryViewModel @Inject constructor(
     override fun handleEvent(event: ReposirtorContract.Event) {
         when (event) {
             is ReposirtorContract.Event.OnShowResult -> {
-                initListeners()
+                showAllRepositories()
             }
             else -> Unit
         }
     }
 
 
-    private fun initListeners() {
+    private fun showAllRepositories() {
         viewModelScope.launch {
-            showAllReposirtoryUseCase.execute().collect { result ->
+            showAllRepository.execute().collect { result ->
                 if (result.isSuccess()) {
                     if (result.data.isNullOrEmpty()) {
                         setEffect { ReposirtorContract.Effect.ShowLoading(false) }
