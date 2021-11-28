@@ -1,33 +1,20 @@
 package com.example.myapplication.ui.repositories
 
-import android.util.Log
-import android.view.View
-import android.widget.Toast
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dropbox.android.external.store4.ResponseOrigin
-import com.dropbox.android.external.store4.StoreRequest
-import com.dropbox.android.external.store4.StoreResponse
-import com.example.myapplication.data.db.enity.NodeEntity
-import com.example.myapplication.data.di.DispatcherProvider
-
-import com.example.myapplication.domain.model.NodeModel
+import com.example.myapplication.common.Constance.Problem
 
 
 import com.example.myapplication.domain.useCase.allRepository.ShowAllRepositoryUseCase
 import com.example.myapplication.ui.base.BaseViewModel
+
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class RepositoryViewModel @Inject constructor(
-    private val showAllReposirtoryUseCase: ShowAllRepositoryUseCase,
-    private val dispatcher: DispatcherProvider
+    private val showAllReposirtoryUseCase: ShowAllRepositoryUseCase
 ) :
     BaseViewModel<ReposirtorContract.Event, ReposirtorContract.State, ReposirtorContract.Effect>() {
 
@@ -58,14 +45,14 @@ class RepositoryViewModel @Inject constructor(
                         setState { copy(state = ReposirtorContract.SendRequestState.Success(allData = result.data)) }
                         setEffect { ReposirtorContract.Effect.ShowLoading(false) }
                         setEffect {
-                            ReposirtorContract.Effect.ShowMessage("Have Problem", false)
+                            ReposirtorContract.Effect.ShowMessage(Problem, false)
                         }
                     }
                 } else if (result.isLoading()) {
                     setEffect { ReposirtorContract.Effect.ShowLoading(true) }
                 } else {
                     setEffect {
-                        ReposirtorContract.Effect.ShowMessage("Have Problem", true)
+                        ReposirtorContract.Effect.ShowMessage(Problem, true)
                     }
                     setEffect { ReposirtorContract.Effect.ShowLoading(false) }
                 }

@@ -83,7 +83,8 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
     }
 
 
-    private fun setUpSeriesRecycler(list: List<NodeEntity>) {
+    private fun setUpSeriesRecycler(list: List<NodeModel>) {
+        Log.e("TAG", "setUpSeriesRecycler:${list} ", )
         binding!!.recyclerviewRepositoryF.adapter = repositoryAdapter
         binding!!.recyclerviewRepositoryF.setHasFixedSize(true)
         repositoryAdapter?.submitList(list!!)

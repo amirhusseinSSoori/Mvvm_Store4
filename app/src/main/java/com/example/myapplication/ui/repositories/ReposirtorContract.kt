@@ -20,7 +20,7 @@ class ReposirtorContract {
 
     sealed class SendRequestState {
         object Idle : SendRequestState()
-        data class Success(val allData: List<NodeEntity>) : SendRequestState()
+        data class Success(val allData: List<NodeModel>) : SendRequestState()
     }
 
     sealed class Effect : UiEffect {

@@ -2,6 +2,7 @@ package com.example.myapplication.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.example.myapplication.common.Constance.DbName
 import com.example.myapplication.data.db.MyDataBase
 import com.example.myapplication.data.db.dao.GithubDao
 import dagger.Module
@@ -23,7 +24,7 @@ object LocalModule {
             .databaseBuilder(
                 context,
                 MyDataBase::class.java,
-                "DATABASE_NAME"
+                DbName
             )
             .fallbackToDestructiveMigration()
             .build()

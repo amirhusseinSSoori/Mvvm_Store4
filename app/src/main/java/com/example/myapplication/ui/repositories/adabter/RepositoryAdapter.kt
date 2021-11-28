@@ -14,16 +14,16 @@ import com.squareup.picasso.Picasso
 class RepositoryAdapter() :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NodeEntity?>() {
+    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NodeModel?>() {
         override fun areItemsTheSame(
-            oldItem: NodeEntity,
-            newItem: NodeEntity
+            oldItem: NodeModel,
+            newItem: NodeModel
         ): Boolean {
             return oldItem.id == newItem.id
         }
         override fun areContentsTheSame(
-            oldItem: NodeEntity,
-            newItem: NodeEntity
+            oldItem: NodeModel,
+            newItem: NodeModel
         ): Boolean {
             return oldItem.id == newItem.id
         }
@@ -47,7 +47,7 @@ class RepositoryAdapter() :
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
-    fun submitList(list: List<NodeEntity>) {
+    fun submitList(list: List<NodeModel>) {
         differ.submitList(list)
     }
 
@@ -56,12 +56,12 @@ class RepositoryAdapter() :
         private val binding: RepItemsBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: NodeEntity) = with(itemView) {
-            Picasso.get().load(item.ownerEntity!!.avatarUrl).resize(400, 400).into( binding.imgItemRep)
+        fun bind(item: NodeModel) = with(itemView) {
+            Picasso.get().load(item.owner!!.avatarUrl).resize(400, 400).into( binding.imgItemRep)
             binding.imgItemRep
             binding.txtItemRepName.text = item.name
-            binding.txtItemRepLogin.text = item.ownerEntity!!.login
-            binding.txtItemRepAvetar.text = item.ownerEntity!!.avatarUrl
+            binding.txtItemRepLogin.text = item.owner!!.login
+            binding.txtItemRepAvetar.text = item.owner!!.url
 
         }
     }

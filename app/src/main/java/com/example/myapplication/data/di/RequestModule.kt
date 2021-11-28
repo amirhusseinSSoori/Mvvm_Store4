@@ -3,6 +3,8 @@ package com.example.myapplication.data.di
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Input
+import com.example.myapplication.common.Constance
+import com.example.myapplication.common.Constance.BaseUrl
 import com.example.myapplication.data.network.NetworkInterceptor
 import dagger.Module
 import dagger.Provides
@@ -19,30 +21,18 @@ import javax.inject.Singleton
 object RequestModule {
 
     @Provides
-    fun provideHttpClient(): OkHttpClient {
+    fun provideHttpClient(networkInterceptor: NetworkInterceptor): OkHttpClient {
         return OkHttpClient.Builder()
             .writeTimeout(15, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
-            .addNetworkInterceptor(NetworkInterceptor())
+            .addNetworkInterceptor(networkInterceptor)
             .build()
     }
-
-    fun getCharacters(): ApolloQueryCall<ProfileQuery.Data> =
-        apolloClient().query(ProfileQuery())
-
-    private fun apolloClient(): ApolloClient =
-        ApolloClient.builder().okHttpClient(
-            OkHttpClient.Builder()
-                .writeTimeout(15, TimeUnit.SECONDS)
-                .readTimeout(15, TimeUnit.SECONDS)
-                .addNetworkInterceptor(NetworkInterceptor())
-                .build()
-        ).serverUrl("https://api.github.com/graphql").build()
 
     @Singleton
     @Provides
     fun apolloClient(httpClient: OkHttpClient): ApolloClient =
         ApolloClient.builder()
-            .okHttpClient(httpClient).serverUrl("https://api.github.com/graphql").build()
+            .okHttpClient(httpClient).serverUrl(BaseUrl).build()
 
 }

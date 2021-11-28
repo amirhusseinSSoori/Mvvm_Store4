@@ -76,8 +76,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version")
 
 
-    implementation "com.apollographql.apollo:apollo-runtime:2.4.6"
-    implementation "com.apollographql.apollo:apollo-coroutines-support:2.4.6"
+    implementation "com.apollographql.apollo:apollo-runtime:2.5.9"
+    implementation "com.apollographql.apollo:apollo-api:2.5.9"
 
     implementation 'javax.annotation:jsr250-api:1.0'
 
