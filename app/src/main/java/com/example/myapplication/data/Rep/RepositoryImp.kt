@@ -32,6 +32,12 @@ class RepositoryImp @Inject constructor(
     val local: LocalSource,
     val dispatcher: DispatcherProvider
 ) : Repository {
+
+
+
+
+
+    //
      fun getStore(): Store<String, List<NodeEntity>> = StoreBuilder.from(
         fetcher = Fetcher.of { _: String ->
             network.getListRepFromNetwork()
@@ -40,7 +46,6 @@ class RepositoryImp @Inject constructor(
             reader = { local.getListRepository() },
             writer = { _, input: Response<GetListQuery.Data> ->
                 local.updateListRepository(input.data!!.viewer.repositories.nodes!!.mapListServerToEntity())
-
             }
         )
     ).build()

@@ -8,6 +8,7 @@ import com.example.myapplication.data.Rep.RepositoryImp
 import com.example.myapplication.data.source.local.LocalSource
 import com.example.myapplication.data.source.remote.RemoteSource
 import com.example.myapplication.domain.repository.Repository
+import dagger.Binds
 
 import dagger.Module
 import dagger.Provides
@@ -19,27 +20,11 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RepositoryModule {
+interface RepositoryModule {
 
+    @Binds
+    fun provideRepository(repositoryImp: RepositoryImp): Repository
 
-    @Provides
-    fun provideRepository(source: RemoteSource,localSource: LocalSource,dispatcher: DispatcherProvider): Repository {
-        return RepositoryImp(source,localSource,dispatcher)
-    }
-
-
-    @Provides
-    fun providerDispatcher():DispatcherProvider = object : DispatcherProvider {
-        override val main: CoroutineDispatcher
-            get() = Dispatchers.Main
-        override val io: CoroutineDispatcher
-            get() = Dispatchers.IO
-        override val default: CoroutineDispatcher
-            get() = Dispatchers.Default
-        override val unconfined: CoroutineDispatcher
-            get() = Dispatchers.Unconfined
-
-    }
 }
 
 

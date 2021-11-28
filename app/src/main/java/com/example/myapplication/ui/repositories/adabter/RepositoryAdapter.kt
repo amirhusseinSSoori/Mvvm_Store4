@@ -9,6 +9,7 @@ import com.example.myapplication.data.db.enity.NodeEntity
 
 import com.example.myapplication.domain.model.NodeModel
 import com.example.myapplication.databinding.RepItemsBinding
+import com.example.myapplication.util.setImage
 import com.squareup.picasso.Picasso
 
 class RepositoryAdapter() :
@@ -56,13 +57,13 @@ class RepositoryAdapter() :
         private val binding: RepItemsBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: NodeModel) = with(itemView) {
-            Picasso.get().load(item.owner!!.avatarUrl).resize(400, 400).into( binding.imgItemRep)
-            binding.imgItemRep
-            binding.txtItemRepName.text = item.name
-            binding.txtItemRepLogin.text = item.owner!!.login
-            binding.txtItemRepAvetar.text = item.owner!!.url
-
+        fun bind(item: NodeModel) {
+            binding.apply {
+                Pair(item.owner!!.avatarUrl!!,imgItemRep).setImage()
+                txtItemRepName.text = item.name
+                txtItemRepLogin.text = item.owner.login
+                txtItemRepAvetar.text = item.owner.url
+            }
         }
     }
 

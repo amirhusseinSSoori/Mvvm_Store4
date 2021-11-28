@@ -5,12 +5,15 @@ import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Input
 import com.example.myapplication.common.Constance
 import com.example.myapplication.common.Constance.BaseUrl
+import com.example.myapplication.data.DispatcherProvider
 import com.example.myapplication.data.network.NetworkInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import example.myapplication.ProfileQuery
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
@@ -34,5 +37,18 @@ object RequestModule {
     fun apolloClient(httpClient: OkHttpClient): ApolloClient =
         ApolloClient.builder()
             .okHttpClient(httpClient).serverUrl(BaseUrl).build()
+
+    @Provides
+    fun providerDispatcher():DispatcherProvider = object : DispatcherProvider {
+        override val main: CoroutineDispatcher
+            get() = Dispatchers.Main
+        override val io: CoroutineDispatcher
+            get() = Dispatchers.IO
+        override val default: CoroutineDispatcher
+            get() = Dispatchers.Default
+        override val unconfined: CoroutineDispatcher
+            get() = Dispatchers.Unconfined
+
+    }
 
 }

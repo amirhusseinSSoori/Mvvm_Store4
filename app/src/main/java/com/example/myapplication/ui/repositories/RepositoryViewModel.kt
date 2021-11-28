@@ -15,8 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class RepositoryViewModel @Inject constructor(
     private val showAllReposirtoryUseCase: ShowAllRepositoryUseCase
-) :
-    BaseViewModel<ReposirtorContract.Event, ReposirtorContract.State, ReposirtorContract.Effect>() {
+) : BaseViewModel<ReposirtorContract.Event, ReposirtorContract.State, ReposirtorContract.Effect>() {
 
 
     override fun createInitialState(): ReposirtorContract.State {

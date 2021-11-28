@@ -6,6 +6,7 @@ import com.example.myapplication.data.source.local.LocalSource
 import com.example.myapplication.data.source.local.LocalSourceImp
 import com.example.myapplication.data.source.remote.RemoteSource
 import com.example.myapplication.data.source.remote.RemoteSourceImp
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,15 +15,11 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object SourceModule {
+interface SourceModule {
 
-    @Provides
-    fun provideNetworkSource(network: ApolloClient): RemoteSource {
-        return RemoteSourceImp(network)
-    }
+    @Binds
+    fun provideNetworkSource(networkSourceImp: RemoteSourceImp): RemoteSource
 
-    @Provides
-    fun provideLocalSource(network: GithubDao): LocalSource {
-        return LocalSourceImp(network)
-    }
+    @Binds
+    fun provideLocalSource(localSourceImp: LocalSourceImp): LocalSource
 }
