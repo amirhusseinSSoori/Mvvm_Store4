@@ -14,12 +14,12 @@ class ReposirtorContract {
     }
 
     data class State(
-        val state: SendRequestState
+        val state: RepositoriesState
     ) : UiState
 
-    sealed class SendRequestState {
-        object Idle : SendRequestState()
-        data class Success(val allData: List<NodeModel>) : SendRequestState()
+    sealed class RepositoriesState {
+        object Idle : RepositoriesState()
+        data class AllRepositoriesState(val repositories: List<NodeModel>) : RepositoriesState()
     }
 
     sealed class Effect : UiEffect {

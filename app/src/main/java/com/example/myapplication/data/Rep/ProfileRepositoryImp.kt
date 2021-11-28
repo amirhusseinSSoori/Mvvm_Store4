@@ -9,10 +9,12 @@ import com.example.myapplication.data.db.entity.ProfileEntity
 import com.example.myapplication.data.mappers.mapEntityListToModelList
 import com.example.myapplication.data.mappers.mapListServerToEntity
 import com.example.myapplication.data.mappers.mapToProfile
+import com.example.myapplication.data.mappers.mapToProfileModel
 import com.example.myapplication.data.source.local.LocalSource
 import com.example.myapplication.data.source.remote.RemoteSource
 import com.example.myapplication.domain.exption.SSOTResult
 import com.example.myapplication.domain.model.NodeModel
+import com.example.myapplication.domain.model.ProfileModel
 import com.example.myapplication.domain.repository.ProfileRepositry
 import example.myapplication.GetListQuery
 import example.myapplication.ProfileQuery
@@ -44,24 +46,24 @@ class ProfileRepositoryImp @Inject constructor(
     ).build()
 
 
-    override suspend fun getLatestProfile(): Flow<SSOTResult<ProfileEntity>> {
+    override suspend fun getLatestProfile(): Flow<SSOTResult<ProfileModel>> {
         return flow {
             getStore().stream(StoreRequest.cached(key = Constance.KeyAccount, refresh = true))
                 .flowOn(dispatcher.io)
                 .collect { response: StoreResponse<ProfileEntity> ->
                     when (response) {
                         is StoreResponse.Loading -> {
-                            emit(SSOTResult.loading<ProfileEntity>())
+                            emit(SSOTResult.loading<ProfileModel>())
                         }
                         is StoreResponse.Error -> {
-                            emit(SSOTResult.error<ProfileEntity>())
+                            emit(SSOTResult.error<ProfileModel>())
 
                         }
                         is StoreResponse.Data -> {
-                            emit(SSOTResult.success(response.value))
+                            emit(SSOTResult.success(response.value.mapToProfileModel()))
                         }
                         is StoreResponse.NoNewData -> {
-                            emit(SSOTResult.error<ProfileEntity>())
+                            emit(SSOTResult.error<ProfileModel>())
                         }
 
                     }

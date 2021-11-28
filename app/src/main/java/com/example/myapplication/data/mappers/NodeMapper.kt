@@ -45,16 +45,7 @@ fun List<GetListQuery.Node?>.mapListServerToEntity(): List<NodeEntity> {
     return map { it!!.mapServerToEntity() }
 }
 
-fun ProfileQuery.Data.mapToProfile():ProfileEntity{
 
-    return ProfileEntity(
-        login = repositoryOwner!!.login,
-        avatarUrl =if (repositoryOwner.avatarUrl is String) repositoryOwner.avatarUrl else EMPTY_STRING,
-        url = if (repositoryOwner.url is String) repositoryOwner.url else EMPTY_STRING,
-    )
-
-
-}
 
 
 

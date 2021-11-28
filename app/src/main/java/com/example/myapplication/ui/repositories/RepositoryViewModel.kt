@@ -20,7 +20,7 @@ class RepositoryViewModel @Inject constructor(
 
     override fun createInitialState(): ReposirtorContract.State {
         return ReposirtorContract.State(
-            ReposirtorContract.SendRequestState.Idle
+            ReposirtorContract.RepositoriesState.Idle
         )
     }
 
@@ -41,7 +41,7 @@ class RepositoryViewModel @Inject constructor(
                     if (result.data.isNullOrEmpty()) {
                         setEffect { ReposirtorContract.Effect.ShowLoading(false) }
                     } else {
-                        setState { copy(state = ReposirtorContract.SendRequestState.Success(allData = result.data)) }
+                        setState { copy(state = ReposirtorContract.RepositoriesState.AllRepositoriesState(repositories = result.data)) }
                         setEffect { ReposirtorContract.Effect.ShowLoading(false) }
                         setEffect {
                             ReposirtorContract.Effect.ShowMessage(Problem, false)

@@ -46,9 +46,9 @@ class RepositoryFragment : Fragment(R.layout.fragment_repository) {
         lifecycleScope.launch {
             viewModel.uiState.collect {
                 when (it.state) {
-                    is ReposirtorContract.SendRequestState.Idle -> Unit
-                    is ReposirtorContract.SendRequestState.Success -> {
-                        setUpSeriesRecycler(list = it.state.allData)
+                    is ReposirtorContract.RepositoriesState.Idle -> Unit
+                    is ReposirtorContract.RepositoriesState.AllRepositoriesState -> {
+                        setUpSeriesRecycler(list = it.state.repositories)
                     }
                 }
             }

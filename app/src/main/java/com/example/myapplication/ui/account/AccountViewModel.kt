@@ -1,11 +1,10 @@
 package com.example.myapplication.ui.account
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.common.Constance
-import com.example.myapplication.domain.repository.ProfileRepositry
+import com.example.myapplication.common.Constance.Problem
+import com.example.myapplication.domain.interactor.account.ShowAccountDetailsUseCase
 import com.example.myapplication.ui.base.BaseViewModel
-import com.example.myapplication.ui.repositories.ReposirtorContract
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -13,49 +12,49 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class AccountViewModel  @Inject constructor(val rep: ProfileRepositry): BaseViewModel<AccountContract.Event, AccountContract.State, AccountContract.Effect>() {
+class AccountViewModel @Inject constructor(private val showAccountDetailsUseCase: ShowAccountDetailsUseCase) :
+    BaseViewModel<AccountContract.Event, AccountContract.State, AccountContract.Effect>() {
     override fun createInitialState(): AccountContract.State {
         return AccountContract.State(
-            AccountContract.SendRequestState.Idle
+            AccountContract.ProfileState.Idle
         )
     }
 
     override fun handleEvent(event: AccountContract.Event) {
         when (event) {
-            is AccountContract.Event.OnShowResult -> {
-                showAllRepositories()
+            is AccountContract.Event.EventProfile -> {
+                showProfileRepository()
             }
-            else -> Unit
         }
     }
 
 
-
-    private fun showAllRepositories() {
+    private fun showProfileRepository() {
         viewModelScope.launch {
-            rep.getLatestProfile().collect { result ->
+            showAccountDetailsUseCase.execute().collect { result ->
                 if (result.isSuccess()) {
-                    if (result.data==null) {
+
+                   
+                    if (result.data == null) {
                         setEffect { AccountContract.Effect.ShowLoading(false) }
                     } else {
-                        setState { copy(state = AccountContract.SendRequestState.Success(allData = result.data)) }
+                        setState { copy(state = AccountContract.ProfileState.DetailsProfileState(profile = result.data)) }
                         setEffect { AccountContract.Effect.ShowLoading(false) }
                         setEffect {
-                            AccountContract.Effect.ShowMessage(Constance.Problem, false)
+                            AccountContract.Effect.ShowMessage(Problem, false)
                         }
                     }
                 } else if (result.isLoading()) {
                     setEffect { AccountContract.Effect.ShowLoading(true) }
                 } else {
                     setEffect {
-                        AccountContract.Effect.ShowMessage(Constance.Problem, true)
+                        AccountContract.Effect.ShowMessage(Problem, true)
                     }
                     setEffect { AccountContract.Effect.ShowLoading(false) }
                 }
             }
         }
     }
-
 
 
 }
