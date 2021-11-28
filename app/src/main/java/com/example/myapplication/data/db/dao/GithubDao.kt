@@ -2,6 +2,7 @@ package com.example.myapplication.data.db.dao
 
 import androidx.room.*
 import com.example.myapplication.data.db.entity.NodeEntity
+import com.example.myapplication.data.db.entity.ProfileEntity
 import kotlinx.coroutines.flow.Flow
 
 
@@ -21,4 +22,21 @@ interface GithubDao {
         deleteAll()
         insert(obj)
     }
+
+
+
+    @Insert
+    suspend fun insertProfile (profile: ProfileEntity)
+
+    @Query("DELETE  FROM profileEntity")
+    suspend fun deleteAllProfile()
+
+    @Transaction
+    suspend fun updateProfile(obj: ProfileEntity) {
+        deleteAllProfile()
+        insertProfile(obj)
+    }
+
+    @Query("SELECT * FROM profileEntity")
+    fun getpROFILE(): Flow<ProfileEntity>
 }

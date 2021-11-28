@@ -1,4 +1,4 @@
-package com.example.myapplication.domain.interactor.allRepository
+package com.example.myapplication.domain.interactor.repository
 
 import com.example.myapplication.domain.interactor.base.UseCaseImmediate
 import com.example.myapplication.domain.exption.SSOTResult

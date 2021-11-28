@@ -8,7 +8,6 @@ import com.example.myapplication.data.DispatcherProvider
 import com.example.myapplication.data.db.entity.NodeEntity
 
 
-
 import com.example.myapplication.data.mappers.*
 import com.example.myapplication.data.source.local.LocalSource
 import com.example.myapplication.data.source.remote.RemoteSource
@@ -18,6 +17,7 @@ import com.example.myapplication.domain.repository.Repository
 
 
 import example.myapplication.GetListQuery
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -29,20 +29,17 @@ class RepositoryImp @Inject constructor(
     val local: LocalSource,
     val dispatcher: DispatcherProvider
 ) : Repository {
-
-
-
-
-
-    //
-     fun getStore(): Store<String, List<NodeEntity>> = StoreBuilder.from(
+    // https://github.com/dropbox/Store
+    override fun getStore(): Store<String, List<NodeEntity>> = StoreBuilder.from(
         fetcher = Fetcher.of { _: String ->
             network.getListRepFromNetwork()
         },
         sourceOfTruth = SourceOfTruth.Companion.of(
             reader = { local.getListRepository() },
             writer = { _, input: Response<GetListQuery.Data> ->
-                local.updateListRepository(input.data!!.viewer.repositories.nodes!!.mapListServerToEntity())
+                input.data?.viewer?.repositories?.nodes?.let {
+                    local.updateListRepository(it.mapListServerToEntity())
+                }
             }
         )
     ).build()
@@ -67,9 +64,6 @@ class RepositoryImp @Inject constructor(
                 }
         }.flowOn(dispatcher.io)
     }
-
-
-
 
 
 }

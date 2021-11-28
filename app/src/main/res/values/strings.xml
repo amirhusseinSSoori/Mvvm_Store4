@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">My Application</string>
     <string name="txt_repositroyF_retry">مشکلی ب وجود امده است دوباره سعی کنید</string>
+    <string name="txt_RepositoryButton">Repository</string>
 </resources>

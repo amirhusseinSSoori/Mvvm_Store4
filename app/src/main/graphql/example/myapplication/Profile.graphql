@@ -1,0 +1,7 @@
+query Profile{
+    repositoryOwner(login:"amirhusseinSSoori"){
+        login
+        avatarUrl
+        url
+    }
+}

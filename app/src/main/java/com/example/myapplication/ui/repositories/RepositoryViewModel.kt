@@ -2,7 +2,7 @@ package com.example.myapplication.ui.repositories
 
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.common.Constance.Problem
-import com.example.myapplication.domain.interactor.allRepository.ShowAllRepositoryUseCase
+import com.example.myapplication.domain.interactor.repository.ShowAllRepositoryUseCase
 
 
 import com.example.myapplication.ui.base.BaseViewModel

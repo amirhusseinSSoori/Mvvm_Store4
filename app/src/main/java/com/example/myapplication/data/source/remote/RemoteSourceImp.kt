@@ -5,8 +5,10 @@ import com.apollographql.apollo.ApolloQueryCall
 import com.apollographql.apollo.api.Response
 import com.apollographql.apollo.coroutines.await
 
+
 import example.myapplication.GetListQuery
 import example.myapplication.ProfileQuery
+
 import javax.inject.Inject
 
 class RemoteSourceImp @Inject constructor(val network: ApolloClient) : RemoteSource {
@@ -14,6 +16,9 @@ class RemoteSourceImp @Inject constructor(val network: ApolloClient) : RemoteSou
         return network.query(GetListQuery()).await()
     }
 
+    override suspend fun getProfileFromNetwork(): Response<ProfileQuery.Data> {
+        return network.query(ProfileQuery()).await()
+    }
 
 
 }
