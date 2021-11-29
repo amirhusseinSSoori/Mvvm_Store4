@@ -29,8 +29,6 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>(FragmentIntroBinding::i
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-
-
             binding.apply {
                 viewIntroFExplosion.let { explorer ->
                     explorer.isVisible = true

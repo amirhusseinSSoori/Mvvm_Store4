@@ -57,8 +57,6 @@ class AccountRepositoryImp @Inject constructor(
                             emit(SSOTResult.loading<ProfileModel>())
                         }
                         is StoreResponse.Error -> {
-
-
                             emit(SSOTResult.error<ProfileModel>(msg = response.errorMessageOrNull()))
                         }
                         is StoreResponse.Data -> {

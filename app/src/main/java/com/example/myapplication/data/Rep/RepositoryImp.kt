@@ -53,9 +53,6 @@ class RepositoryImp @Inject constructor(
                             emit(SSOTResult.loading<List<NodeModel>>())
                         }
                         is StoreResponse.Error -> {
-                            Exception()
-
-
                             emit(SSOTResult.error<List<NodeModel>>(msg = response.errorMessageOrNull()))
                         }
                         is StoreResponse.Data -> {
