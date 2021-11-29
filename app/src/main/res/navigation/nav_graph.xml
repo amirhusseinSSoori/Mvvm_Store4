@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/introFragment"
         tools:layout="@layout/fragment_intro"
-        android:name="com.example.myapplication.ui.intro.IntroFragment"
+        android:name="com.amirhusseinsoori.apollotask.ui.intro.IntroFragment"
         android:label="IntroFragment" >
         <action
             android:id="@+id/action_introFragment_to_repositoryFragment"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/accountFragment"
-        android:name="com.example.myapplication.ui.account.AccountFragment"
+        android:name="com.amirhusseinsoori.apollotask.ui.account.AccountFragment"
         android:label="AccountFragment" >
         <action
             android:id="@+id/action_accountFragment_to_repositoryFragment"
@@ -30,7 +30,7 @@
     <fragment
         android:id="@+id/repositoryFragment"
         tools:layout="@layout/fragment_repository"
-        android:name="com.example.myapplication.ui.repositories.RepositoryFragment"
+        android:name="com.amirhusseinsoori.apollotask.ui.repositories.RepositoryFragment"
         android:label="RepositoryFragment" >
 
     </fragment>
