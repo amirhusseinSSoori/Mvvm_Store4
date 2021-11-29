@@ -32,7 +32,6 @@ class AccountRepositoryImp @Inject constructor(
     val dispatcher: DispatcherProvider
 ) : ProfileRepositry {
 
-
     override fun getStore(): Store<String, ProfileEntity> = StoreBuilder.from(
         fetcher = Fetcher.of { _: String ->
             network.getProfileFromNetwork()
