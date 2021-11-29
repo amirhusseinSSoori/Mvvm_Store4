@@ -19,7 +19,7 @@ interface RepositoryModule {
     @Binds
     fun provideRepository(repositoryImp: RepositoryImp): Repository
     @Binds
-    fun provideProfileRepository(profileRepositoryImp: AccountRepositoryImp): ProfileRepositry
+    fun provideProfileRepository(accountRepositoryImp: AccountRepositoryImp): ProfileRepositry
 }
 
 

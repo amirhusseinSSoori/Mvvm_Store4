@@ -12,6 +12,6 @@ class Converter : Serializable {
     fun ownerToString(app: OwnerEntity): String = Gson().toJson(app)
 
     @TypeConverter
-    fun ownerToApp(string: String): OwnerEntity = Gson().fromJson(string, OwnerEntity::class.java)
+    fun stringToOwner(string: String): OwnerEntity = Gson().fromJson(string, OwnerEntity::class.java)
 }
 

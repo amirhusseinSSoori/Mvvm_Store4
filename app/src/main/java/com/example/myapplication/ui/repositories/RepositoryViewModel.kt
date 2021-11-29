@@ -29,7 +29,7 @@ class RepositoryViewModel @Inject constructor(
             is RepositoryContract.Event.EventRepository -> {
                 showAllRepositories()
             }
-            else -> Unit
+
         }
     }
 
