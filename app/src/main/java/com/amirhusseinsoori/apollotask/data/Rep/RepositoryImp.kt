@@ -11,7 +11,7 @@ import com.amirhusseinsoori.apollotask.data.db.entity.NodeEntity
 import com.amirhusseinsoori.apollotask.data.mappers.*
 import com.amirhusseinsoori.apollotask.data.source.local.repository.RepositoriesLocalSourceImp
 import com.amirhusseinsoori.apollotask.data.source.remote.RemoteSource
-import com.amirhusseinsoori.apollotask.domain.exption.SSOTResult
+import com.amirhusseinsoori.apollotask.domain.exption.Result
 import com.amirhusseinsoori.apollotask.domain.model.NodeModel
 import com.amirhusseinsoori.apollotask.domain.repository.Repository
 
@@ -43,22 +43,22 @@ class RepositoryImp @Inject constructor(
         )
     ).build()
 
-    override suspend fun getLatestRepositories(): Flow<SSOTResult<List<NodeModel>>> {
+    override suspend fun getLatestRepositories(): Flow<Result<List<NodeModel>>> {
         return flow {
             getStore().stream(StoreRequest.cached(key = KeyStream, refresh = true))
                 .flowOn(dispatcher.io)
                 .collect { response: StoreResponse<List<NodeEntity>> ->
                     when (response) {
                         is StoreResponse.Loading -> {
-                            emit(SSOTResult.loading<List<NodeModel>>())
+                            emit(Result.loading<List<NodeModel>>())
                         }
                         is StoreResponse.Error -> {
-                            emit(SSOTResult.error<List<NodeModel>>(msg = response.errorMessageOrNull()))
+                            emit(Result.error<List<NodeModel>>(message = response.errorMessageOrNull()))
                         }
                         is StoreResponse.Data -> {
-                            emit(SSOTResult.success(response.value.mapEntityListToModelList()))
+                            emit(Result.success(response.value.mapEntityListToModelList()))
                         }
-                        is StoreResponse.NoNewData -> emit(SSOTResult.success(emptyList<NodeModel>()))
+                        is StoreResponse.NoNewData -> emit(Result.success(emptyList<NodeModel>()))
                     }
                 }
         }.flowOn(dispatcher.io)

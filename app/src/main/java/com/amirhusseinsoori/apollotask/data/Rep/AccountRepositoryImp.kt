@@ -11,7 +11,8 @@ import com.amirhusseinsoori.apollotask.data.mappers.mapToProfile
 import com.amirhusseinsoori.apollotask.data.mappers.mapToProfileModel
 import com.amirhusseinsoori.apollotask.data.source.local.account.AccountLocalSource
 import com.amirhusseinsoori.apollotask.data.source.remote.RemoteSource
-import com.amirhusseinsoori.apollotask.domain.exption.SSOTResult
+import com.amirhusseinsoori.apollotask.domain.exption.Result
+import com.amirhusseinsoori.apollotask.domain.model.NodeModel
 
 
 import com.amirhusseinsoori.apollotask.domain.model.ProfileModel
@@ -46,24 +47,22 @@ class AccountRepositoryImp @Inject constructor(
     ).build()
 
 
-    override suspend fun getDetailsOfProfile(): Flow<SSOTResult<ProfileModel>> {
+    override suspend fun getDetailsOfProfile(): Flow<Result<ProfileModel>> {
         return flow {
             getStore().stream(StoreRequest.cached(key = Constance.KeyAccount, refresh = true))
                 .flowOn(dispatcher.io)
                 .collect { response: StoreResponse<ProfileEntity> ->
                     when (response) {
                         is StoreResponse.Loading -> {
-                            emit(SSOTResult.loading<ProfileModel>())
+                            emit(Result.loading<ProfileModel>())
                         }
                         is StoreResponse.Error -> {
-                            emit(SSOTResult.error<ProfileModel>(msg = response.errorMessageOrNull()))
+                            emit(Result.error<ProfileModel>(message = response.errorMessageOrNull()))
                         }
                         is StoreResponse.Data -> {
-                            emit(SSOTResult.success(response.value.mapToProfileModel()))
+                            emit(Result.success(response.value.mapToProfileModel()))
                         }
-                        is StoreResponse.NoNewData -> {
-                            emit(SSOTResult.error<ProfileModel>())
-                        }
+                        is StoreResponse.NoNewData -> emit(Result.success(ProfileModel()))
 
                     }
                 }

@@ -8,14 +8,14 @@ plugins {
 }
 apply from: '../dependency.gradle'
 android {
-    compileSdk 31
+    compileSdk versions.compileSdk
 
     defaultConfig {
         applicationId "com.amirhusseinsoori.ApolloTask"
-        minSdk 21
-        targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        minSdk versions.minSdk
+        targetSdk versions.targetSdk
+        versionCode versions.versionCode
+        versionName versions.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -27,8 +27,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility versions.sourceCompat
+        targetCompatibility versions.sourceCompat
     }
     kotlinOptions {
         jvmTarget = '1.8'

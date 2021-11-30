@@ -60,7 +60,7 @@ class RepositoryViewModel @Inject constructor(
                     result.isLoading() -> {
                         setEffect { RepositoryContract.Effect.ShowLoading(true) }
                     }
-                    else -> {
+                    result.isError() -> {
                         setEffect {
                             RepositoryContract.Effect.ShowMessage(Problem, true)
                         }

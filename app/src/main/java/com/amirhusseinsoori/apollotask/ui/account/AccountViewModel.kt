@@ -53,7 +53,7 @@ class AccountViewModel @Inject constructor(private val showAccountDetailsUseCase
                     result.isLoading() -> {
                         setEffect { AccountContract.Effect.ShowLoading(true) }
                     }
-                    else -> {
+                    result.isError() -> {
                         setEffect {
                             AccountContract.Effect.ShowMessage(Problem, true)
                         }
