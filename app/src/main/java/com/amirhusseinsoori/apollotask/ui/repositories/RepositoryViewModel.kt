@@ -1,8 +1,10 @@
 package com.amirhusseinsoori.apollotask.ui.repositories
 
 import androidx.lifecycle.viewModelScope
+import com.amirhusseinsoori.apollotask.common.Constance
 import com.amirhusseinsoori.apollotask.common.Constance.Problem
 import com.amirhusseinsoori.apollotask.domain.interactor.repository.ShowAllRepositoryUseCase
+import com.amirhusseinsoori.apollotask.ui.account.AccountContract
 
 
 import com.amirhusseinsoori.apollotask.ui.base.BaseViewModel
@@ -37,26 +39,37 @@ class RepositoryViewModel @Inject constructor(
     private fun showAllRepositories() {
         viewModelScope.launch {
             showAllRepository.execute().collect { result ->
-                if (result.isSuccess()) {
-                    if (result.data.isNullOrEmpty()) {
-                        setEffect { RepositoryContract.Effect.ShowLoading(false) }
-                    } else {
-                        setState { copy(state = RepositoryContract.RepositoriesState.AllRepositoriesState(repositories = result.data)) }
-                        setEffect { RepositoryContract.Effect.ShowLoading(false) }
-                        setEffect {
-                            RepositoryContract.Effect.ShowMessage(Problem, false)
+                when {
+                    result.isSuccess() -> {
+                        result.data?.let {
+                            setState {
+                                copy(
+                                    state = RepositoryContract.RepositoriesState.AllRepositoriesState(
+                                        repositories = result.data
+                                    )
+                                )
+                            }
+                            setEffect { RepositoryContract.Effect.ShowLoading(false) }
+                            setEffect {
+                                RepositoryContract.Effect.ShowMessage(Problem, false)
+                            }
+                        } ?: run {
+                            setEffect { RepositoryContract.Effect.ShowLoading(false) }
                         }
                     }
-                } else if (result.isLoading()) {
-                    setEffect { RepositoryContract.Effect.ShowLoading(true) }
-                } else {
-                    setEffect {
-                        RepositoryContract.Effect.ShowMessage(Problem, true)
+                    result.isLoading() -> {
+                        setEffect { RepositoryContract.Effect.ShowLoading(true) }
                     }
-                    setEffect { RepositoryContract.Effect.ShowLoading(false) }
+                    else -> {
+                        setEffect {
+                            RepositoryContract.Effect.ShowMessage(Problem, true)
+                        }
+                        setEffect { RepositoryContract.Effect.ShowLoading(false) }
+                    }
                 }
             }
+
         }
     }
-
 }
+

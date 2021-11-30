@@ -32,25 +32,33 @@ class AccountViewModel @Inject constructor(private val showAccountDetailsUseCase
     private fun showProfileRepository() {
         viewModelScope.launch {
             showAccountDetailsUseCase.execute().collect { result ->
-                if (result.isSuccess()) {
-
-
-                    if (result.data == null) {
-                        setEffect { AccountContract.Effect.ShowLoading(false) }
-                    } else {
-                        setState { copy(state = AccountContract.ProfileState.DetailsProfileState(profile = result.data)) }
-                        setEffect { AccountContract.Effect.ShowLoading(false) }
-                        setEffect {
-                            AccountContract.Effect.ShowMessage(EMPTY_STRING, false)
+                when {
+                    result.isSuccess() -> {
+                        result.data?.let {
+                            setState {
+                                copy(
+                                    state = AccountContract.ProfileState.DetailsProfileState(
+                                        profile = result.data
+                                    )
+                                )
+                            }
+                            setEffect { AccountContract.Effect.ShowLoading(false) }
+                            setEffect {
+                                AccountContract.Effect.ShowMessage(EMPTY_STRING, false)
+                            }
+                        } ?: run {
+                            setEffect { AccountContract.Effect.ShowLoading(false) }
                         }
                     }
-                } else if (result.isLoading()) {
-                    setEffect { AccountContract.Effect.ShowLoading(true) }
-                } else {
-                    setEffect {
-                        AccountContract.Effect.ShowMessage(Problem, true)
+                    result.isLoading() -> {
+                        setEffect { AccountContract.Effect.ShowLoading(true) }
                     }
-                    setEffect { AccountContract.Effect.ShowLoading(false) }
+                    else -> {
+                        setEffect {
+                            AccountContract.Effect.ShowMessage(Problem, true)
+                        }
+                        setEffect { AccountContract.Effect.ShowLoading(false) }
+                    }
                 }
             }
         }
