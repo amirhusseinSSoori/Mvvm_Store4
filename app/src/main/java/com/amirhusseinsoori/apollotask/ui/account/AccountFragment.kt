@@ -39,9 +39,6 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBind
             viewModel.setEvent(AccountContract.Event.EventProfile)
         }
 
-        binding.btnAccountFNavigation.setOnClickListener {
-            findNavController().navigate(R.id.repositoryFragment)
-        }
     }
 
     private fun initObserve() {

@@ -10,29 +10,29 @@ import com.amirhusseinsoori.apollotask.domain.model.NodeModel
 import com.amirhusseinsoori.apollotask.databinding.RepItemsBinding
 import com.amirhusseinsoori.apollotask.util.setImage
 
-class RepositoryAdapter() :
+class RepositoryAdapter(private val interaction: Interaction) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NodeModel?>() {
+    private val differ = AsyncListDiffer(this, object : DiffUtil.ItemCallback<NodeModel?>() {
         override fun areItemsTheSame(
             oldItem: NodeModel,
             newItem: NodeModel
         ): Boolean {
             return oldItem.id == newItem.id
         }
+
         override fun areContentsTheSame(
             oldItem: NodeModel,
             newItem: NodeModel
         ): Boolean {
             return oldItem.id == newItem.id
         }
-    }
-    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+    })
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = RepItemsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieViewHolder(binding)
+        return MovieViewHolder(binding, interaction)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -46,6 +46,7 @@ class RepositoryAdapter() :
     override fun getItemCount(): Int {
         return differ.currentList.size
     }
+
     fun submitList(list: List<NodeModel>) {
         differ.submitList(list)
     }
@@ -53,17 +54,24 @@ class RepositoryAdapter() :
     class MovieViewHolder
     constructor(
         private val binding: RepItemsBinding,
+        private val interaction: Interaction
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: NodeModel) {
+            itemView.setOnClickListener {
+                interaction.onNavigationToAccount()
+            }
             binding.apply {
-                Pair(item.owner!!.avatarUrl!!,imgItemRep).setImage()
+                Pair(item.owner!!.avatarUrl!!, imgItemRep).setImage()
                 txtItemRepName.text = item.name
                 txtItemRepLogin.text = item.owner.login
-                txtItemRepAvetar.text = item.owner.url
+                txtItemRepAvatar.text = item.owner.url
             }
+
         }
     }
 
-
+    interface Interaction {
+        fun onNavigationToAccount()
+    }
 }

@@ -5,6 +5,8 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.amirhusseinsoori.apollotask.R
 
 import com.amirhusseinsoori.apollotask.domain.model.NodeModel
 
@@ -16,7 +18,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepositoryBinding::inflate) {
+class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepositoryBinding::inflate),RepositoryAdapter.Interaction {
 
     private val viewModel: RepositoryViewModel by viewModels()
     private lateinit var repositoryAdapter: RepositoryAdapter
@@ -25,7 +27,7 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repositoryAdapter = RepositoryAdapter()
+        repositoryAdapter = RepositoryAdapter(this)
         viewModel.setEvent(RepositoryContract.Event.EventRepository)
         sideEffect()
     }
@@ -80,8 +82,9 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
         repositoryAdapter?.submitList(list!!)
     }
 
-
-
+    override fun onNavigationToAccount() {
+        findNavController().navigate(R.id.action_repositoryFragment_to_accountFragment2)
+    }
 
 
 }

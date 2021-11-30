@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-     //intro Fragment
+
     <dimen name="icon">40dp</dimen>
-    //Account Fragment
     <dimen name="imgProfile">110dp</dimen>
     <dimen name="TopFromImgProfile">30dp</dimen>
     <dimen name="HeightTextAccountF">25dp</dimen>
     <dimen name="MarginTextAccountF">15dp</dimen>
     <dimen name="ProgressBarSize">50dp</dimen>
-    <dimen name="ButtomNavigation">150dp</dimen>
+    <dimen name="BottomNavigation">150dp</dimen>
     <dimen name="imgProfileItem">90dp</dimen>
     <dimen name="HeightProfileItem">90dp</dimen>
+    <dimen name="scaleAnim">0.85</dimen>
+    <dimen name="HeightContainer_repItem">120dp</dimen>
 </resources>

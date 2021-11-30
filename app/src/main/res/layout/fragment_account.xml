@@ -58,14 +58,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_AccountF_Navigation"
-        android:layout_width="@dimen/ButtomNavigation"
-        android:layout_height="wrap_content"
-        android:text="@string/txt_RepositoryButton"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/img_accountProfileF_showImage"
-        app:layout_constraintStart_toStartOf="@+id/img_accountProfileF_showImage"
-        app:layout_constraintTop_toBottomOf="@+id/txt_accountProfileF_Url" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

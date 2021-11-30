@@ -2,4 +2,5 @@
     <string name="app_name">AppolloSample</string>
     <string name="txt_repositroyF_retry">مشکلی ب وجود امده است دوباره سعی کنید</string>
     <string name="txt_RepositoryButton">Repository</string>
+    <string name="durationAnim">500</string>
 </resources>

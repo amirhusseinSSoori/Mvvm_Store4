@@ -9,12 +9,13 @@
         tools:layout="@layout/fragment_intro"
         android:name="com.amirhusseinsoori.apollotask.ui.intro.IntroFragment"
         android:label="IntroFragment" >
+
+
         <action
-            android:id="@+id/action_introFragment_to_repositoryFragment"
-            app:destination="@id/accountFragment"
+            android:id="@+id/action_introFragment_to_repositoryFragment2"
+            app:destination="@id/repositoryFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true"/>
-
     </fragment>
 
 
@@ -22,9 +23,7 @@
         android:id="@+id/accountFragment"
         android:name="com.amirhusseinsoori.apollotask.ui.account.AccountFragment"
         android:label="AccountFragment" >
-        <action
-            android:id="@+id/action_accountFragment_to_repositoryFragment"
-            app:destination="@id/repositoryFragment" />
+
     </fragment>
 
     <fragment
@@ -33,6 +32,9 @@
         android:name="com.amirhusseinsoori.apollotask.ui.repositories.RepositoryFragment"
         android:label="RepositoryFragment" >
 
+        <action
+            android:id="@+id/action_repositoryFragment_to_accountFragment2"
+            app:destination="@id/accountFragment" />
     </fragment>
 
 

@@ -41,7 +41,7 @@ class IntroFragment : BaseFragment<FragmentIntroBinding>(FragmentIntroBinding::i
                 }
             }
             delay(3000)
-            findNavController().navigate(R.id.action_introFragment_to_repositoryFragment)
+            findNavController().navigate(R.id.action_introFragment_to_repositoryFragment2)
         }
 
 

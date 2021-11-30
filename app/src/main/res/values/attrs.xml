@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <declare-styleable name="ElasticView">
+    <attr name="view_scale" format="float" />
+    <attr name="view_duration" format="integer" />
+    <attr name="view_cornerRadius" format="dimension" />
+  </declare-styleable>
+  <declare-styleable name="ElasticButton">
+    <attr name="button_scale" format="float" />
+    <attr name="button_duration" format="integer" />
+    <attr name="button_cornerRadius" format="dimension" />
+  </declare-styleable>
+  <declare-styleable name="ElasticCheckButton">
+    <attr name="checkButton_scale" format="float" />
+    <attr name="checkButton_duration" format="integer" />
+    <attr name="checkButton_alpha" format="float" />
+    <attr name="checkButton_isChecked" format="boolean" />
+    <attr name="checkButton_cornerRadius" format="dimension" />
+  </declare-styleable>
+  <declare-styleable name="ElasticLayout">
+    <attr name="layout_scale" format="float" />
+    <attr name="layout_duration" format="integer" />
+    <attr name="layout_cornerRadius" format="dimension" />
+  </declare-styleable>
+  <declare-styleable name="ElasticImageView">
+    <attr name="imageView_scale" format="float" />
+    <attr name="imageView_duration" format="integer" />
+  </declare-styleable>
+  <declare-styleable name="ElasticFloatingActionButton">
+    <attr name="fabutton_scale" format="float" />
+    <attr name="fabutton_duration" format="integer" />
+  </declare-styleable>
+  <declare-styleable name="ElasticCardView">
+    <attr name="cardView_scale" format="float" />
+    <attr name="cardView_duration" format="integer" />
+  </declare-styleable>
+</resources>
