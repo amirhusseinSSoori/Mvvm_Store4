@@ -1,4 +1,4 @@
-package com.amirhusseinsoori.apollotask.data.Rep
+package com.amirhusseinsoori.apollotask.data.repository
 
 
 import com.apollographql.apollo.api.Response
@@ -46,7 +46,6 @@ class RepositoryImp @Inject constructor(
     override suspend fun getLatestRepositories(): Flow<Result<List<NodeModel>>> {
         return flow {
             getStore().stream(StoreRequest.cached(key = KeyStream, refresh = true))
-                .flowOn(dispatcher.io)
                 .collect { response: StoreResponse<List<NodeEntity>> ->
                     when (response) {
                         is StoreResponse.Loading -> {

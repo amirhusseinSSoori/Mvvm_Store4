@@ -1,8 +1,8 @@
 package com.amirhusseinsoori.apollotask.data.di
 
 
-import com.amirhusseinsoori.apollotask.data.Rep.AccountRepositoryImp
-import com.amirhusseinsoori.apollotask.data.Rep.RepositoryImp
+import com.amirhusseinsoori.apollotask.data.repository.AccountRepositoryImp
+import com.amirhusseinsoori.apollotask.data.repository.RepositoryImp
 import com.amirhusseinsoori.apollotask.domain.repository.ProfileRepositry
 
 import com.amirhusseinsoori.apollotask.domain.repository.Repository

@@ -36,7 +36,7 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
         super.onViewCreated(view, savedInstanceState)
         initObserve()
 
-        binding!!.txtRepositoryFShowMessage.setOnClickListener {
+        binding.txtRepositoryFShowMessage.setOnClickListener {
             viewModel.setEvent(RepositoryContract.Event.EventRepository)
         }
 

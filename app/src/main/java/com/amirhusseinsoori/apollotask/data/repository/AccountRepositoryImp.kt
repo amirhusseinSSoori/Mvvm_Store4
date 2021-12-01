@@ -1,4 +1,4 @@
-package com.amirhusseinsoori.apollotask.data.Rep
+package com.amirhusseinsoori.apollotask.data.repository
 
 import com.apollographql.apollo.api.Response
 import com.dropbox.android.external.store4.*
@@ -12,7 +12,6 @@ import com.amirhusseinsoori.apollotask.data.mappers.mapToProfileModel
 import com.amirhusseinsoori.apollotask.data.source.local.account.AccountLocalSource
 import com.amirhusseinsoori.apollotask.data.source.remote.RemoteSource
 import com.amirhusseinsoori.apollotask.domain.exption.Result
-import com.amirhusseinsoori.apollotask.domain.model.NodeModel
 
 
 import com.amirhusseinsoori.apollotask.domain.model.ProfileModel
@@ -50,7 +49,6 @@ class AccountRepositoryImp @Inject constructor(
     override suspend fun getDetailsOfProfile(): Flow<Result<ProfileModel>> {
         return flow {
             getStore().stream(StoreRequest.cached(key = Constance.KeyAccount, refresh = true))
-                .flowOn(dispatcher.io)
                 .collect { response: StoreResponse<ProfileEntity> ->
                     when (response) {
                         is StoreResponse.Loading -> {
