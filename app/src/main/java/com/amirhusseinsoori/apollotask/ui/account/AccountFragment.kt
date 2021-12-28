@@ -1,8 +1,12 @@
 package com.amirhusseinsoori.apollotask.ui.account
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -16,11 +20,12 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBinding::inflate) {
+class AccountFragment : Fragment() {
 
 
     private val viewModel: AccountViewModel by viewModels()
-
+    private var _dataBinding: FragmentAccountBinding? = null
+    val dataBinding get() = _dataBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +33,21 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBind
         sideEffect()
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _dataBinding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_account, container, false)
+        return _dataBinding?.root
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initObserve()
-
-
-        binding.txtAccountProfileFShowMessage.setOnClickListener {
+        dataBinding?.txtAccountProfileFShowMessage?.setOnClickListener {
             viewModel.setEvent(AccountContract.Event.EventProfile)
         }
 
@@ -47,42 +59,42 @@ class AccountFragment : BaseFragment<FragmentAccountBinding>(FragmentAccountBind
                 when (it.state) {
                     is AccountContract.ProfileState.Idle -> Unit
                     is AccountContract.ProfileState.DetailsProfileState -> {
-                        it.state.profile?.let { data ->
-                            binding.apply {
-                                Pair(
-                                    data.avatarUrl!!,
-                                    imgAccountProfileFShowImage
-                                ).setImage()
-                                txtAccountProfileFName.text = data.login
-                                txtAccountProfileFUrl.text = data.url
+                        it.state.profile.let { data ->
+                            dataBinding?.apply {
+                                profile = data
                             }
-
                         }
-
-
                     }
                 }
             }
         }
+
     }
 
     private fun sideEffect() {
+
         lifecycleScope.launch {
             viewModel.effect.collect {
                 when (it) {
                     is AccountContract.Effect.ShowMessage -> {
-                        binding.txtAccountProfileFShowMessage.apply {
+                        dataBinding!!.txtAccountProfileFShowMessage.apply {
                             isVisible = it.Active
                             text = it.message
                         }
                     }
                     is AccountContract.Effect.ShowLoading -> {
-                        binding.progressBarAccount.isVisible = it.Active
+                        dataBinding?.isLoading=it.Active
+                        //dataBinding?.progressBarAccount?.isVisible = it.Active
                     }
                 }
             }
 
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _dataBinding = null
     }
 
 
