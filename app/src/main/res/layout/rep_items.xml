@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/HeightContainer_repItem"
         android:orientation="vertical">
-        <de.hdodenhof.circleimageview.CircleImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_itemRep"
             android:layout_width="@dimen/imgProfileItem"
             android:layout_height="@dimen/imgProfileItem"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_itemRep_name"
             android:layout_width="0dp"
             android:layout_height="@dimen/HeightTextAccountF"
@@ -27,7 +27,7 @@
             app:layout_constraintStart_toEndOf="@+id/img_itemRep"
             app:layout_constraintTop_toTopOf="@+id/img_itemRep" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_itemRep_login"
             android:layout_width="0dp"
             android:layout_height="@dimen/HeightTextAccountF"
@@ -37,7 +37,7 @@
             app:layout_constraintStart_toEndOf="@+id/img_itemRep"
             app:layout_constraintTop_toBottomOf="@+id/txt_itemRep_name" />
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_itemRep_avatar"
             android:layout_width="0dp"
             android:layout_height="@dimen/HeightTextAccountF"

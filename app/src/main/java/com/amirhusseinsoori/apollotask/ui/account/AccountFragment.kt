@@ -1,5 +1,7 @@
 package com.amirhusseinsoori.apollotask.ui.account
 
+import android.graphics.drawable.PictureDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,11 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.amirhusseinsoori.apollotask.R
 import com.amirhusseinsoori.apollotask.databinding.FragmentAccountBinding
-import com.amirhusseinsoori.apollotask.ui.base.BaseFragment
-import com.amirhusseinsoori.apollotask.util.setImage
+import com.amirhusseinsoori.apollotask.ui.base.GlideApp
+import com.bumptech.glide.GenericTransitionOptions
+import com.bumptech.glide.RequestBuilder
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -62,7 +67,15 @@ class AccountFragment : Fragment() {
                         it.state.profile.let { data ->
                             dataBinding?.apply {
                                 profile = data
+
+                                GlideApp.with(requireContext())
+                                    .load(data.avatarUrl)
+                                    .circleCrop()
+                                    .transition(GenericTransitionOptions.with(R.anim.zoom_in))
+                                    .into(imgAccountProfileFShowImage)
+
                             }
+
                         }
                     }
                 }

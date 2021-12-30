@@ -18,18 +18,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_accountProfileF_showImage"
         android:layout_width="@dimen/imgProfile"
         android:layout_height="@dimen/imgProfile"
-        app:srcUrl="@{profile.avatarUrl}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_accountProfileF_showMessage"
         android:layout_width="match_parent"
         android:layout_height="@dimen/TopFromImgProfile"
@@ -53,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_accountProfileF_showImage" />
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_accountProfileF_Url"
         android:layout_width="0dp"
         android:layout_height="@dimen/HeightTextAccountF"

@@ -13,4 +13,5 @@
     <dimen name="HeightProfileItem">90dp</dimen>
     <dimen name="scaleAnim">0.85</dimen>
     <dimen name="HeightContainer_repItem">120dp</dimen>
+    <dimen name="corner_radius">25dp</dimen>
 </resources>

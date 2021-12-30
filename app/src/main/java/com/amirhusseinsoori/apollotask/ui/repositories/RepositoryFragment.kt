@@ -6,12 +6,15 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.amirhusseinsoori.apollotask.R
 
 import com.amirhusseinsoori.apollotask.domain.model.NodeModel
 
 import com.amirhusseinsoori.apollotask.databinding.FragmentRepositoryBinding
 import com.amirhusseinsoori.apollotask.ui.base.BaseFragment
+import com.amirhusseinsoori.apollotask.ui.repositories.adabter.Controller
+import com.amirhusseinsoori.apollotask.ui.repositories.adabter.MyController
 import com.amirhusseinsoori.apollotask.ui.repositories.adabter.RepositoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -48,7 +51,8 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
                 when (it.state) {
                     is RepositoryContract.RepositoriesState.Idle -> Unit
                     is RepositoryContract.RepositoriesState.AllRepositoriesState -> {
-                        setUpSeriesRecycler(list = it.state.repositories)
+//                        setUpSeriesRecycler(list = it.state.repositories)
+                        setupRecyclerView(list = it.state.repositories)
                     }
                 }
             }
@@ -65,6 +69,8 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
                             isVisible = it.Active
                             text = it.message
                         }
+
+
                     }
                     is RepositoryContract.Effect.ShowLoading -> {
                         binding!!.progressBarRepository.isVisible = it.Active
@@ -75,11 +81,13 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
         }
     }
 
-
-    private fun setUpSeriesRecycler(list: List<NodeModel>) {
-        binding!!.recyclerviewRepositoryF.adapter = repositoryAdapter
-        binding!!.recyclerviewRepositoryF.setHasFixedSize(true)
-        repositoryAdapter?.submitList(list!!)
+    private fun setupRecyclerView(list: List<NodeModel>) {
+        val controller = Controller().apply {
+            productItems = list
+        }
+        binding.recyclerviewRepositoryF.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerviewRepositoryF.setHasFixedSize(false)
+        binding.recyclerviewRepositoryF.setController(controller)
     }
 
     override fun onNavigationToAccount() {

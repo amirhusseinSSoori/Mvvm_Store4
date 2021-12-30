@@ -33,6 +33,13 @@ class AccountViewModel @Inject constructor(private val showAccountDetailsUseCase
         viewModelScope.launch {
             showAccountDetailsUseCase.execute().collect { result ->
                 when {
+                    result.isLoading() -> {
+
+                        if(result.data==null){
+                            setEffect { AccountContract.Effect.ShowLoading(true) }
+                        }
+
+                    }
                     result.isSuccess() -> {
                         result.data?.let {
                             setState {
@@ -50,9 +57,7 @@ class AccountViewModel @Inject constructor(private val showAccountDetailsUseCase
                             setEffect { AccountContract.Effect.ShowLoading(false) }
                         }
                     }
-                    result.isLoading() -> {
-                        setEffect { AccountContract.Effect.ShowLoading(true) }
-                    }
+
                     result.isError() -> {
                         setEffect {
                             AccountContract.Effect.ShowMessage(Problem, true)
