@@ -13,7 +13,9 @@ import com.amirhusseinsoori.apollotask.data.source.local.repository.Repositories
 import com.amirhusseinsoori.apollotask.data.source.remote.RemoteSource
 import com.amirhusseinsoori.apollotask.domain.exption.Result
 import com.amirhusseinsoori.apollotask.domain.model.NodeModel
+import com.amirhusseinsoori.apollotask.domain.model.ProfileModel
 import com.amirhusseinsoori.apollotask.domain.repository.Repository
+import com.amirhusseinsoori.apollotask.util.isConnectedToInternet
 
 
 import example.myapplication.GetListQuery
@@ -52,7 +54,16 @@ class RepositoryImp @Inject constructor(
                             emit(Result.loading<List<NodeModel>>())
                         }
                         is StoreResponse.Error -> {
-                            emit(Result.error<List<NodeModel>>(message = response.errorMessageOrNull()))
+                            isConnectedToInternet().collect { network ->
+                                network.fold(onSuccess = {
+                                    if(it){
+                                        emit(Result.error<List<NodeModel>>(message = response.errorMessageOrNull()))
+                                    }else{
+                                        emit(Result.error<List<NodeModel>>(message = "please check connection network"))
+                                    } }, onFailure = {
+                                    emit(Result.error<List<NodeModel>>(message = "google is done :)"))
+                                    })
+                            }
                         }
                         is StoreResponse.Data -> {
                             emit(Result.success(response.value.mapEntityListToModelList()))

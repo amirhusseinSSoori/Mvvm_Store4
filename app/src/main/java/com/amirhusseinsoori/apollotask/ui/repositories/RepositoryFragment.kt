@@ -2,8 +2,11 @@ package com.amirhusseinsoori.apollotask.ui.repositories
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.amirhusseinsoori.apollotask.R
@@ -19,7 +22,6 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepositoryBinding::inflate),RepositoryAdapter.Interaction {
-
     private val viewModel: RepositoryViewModel by viewModels()
     private lateinit var repositoryAdapter: RepositoryAdapter
 
@@ -28,7 +30,6 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repositoryAdapter = RepositoryAdapter(this)
-        viewModel.setEvent(RepositoryContract.Event.EventRepository)
         sideEffect()
     }
 
@@ -43,8 +44,8 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
     }
 
     private fun initObserve() {
-        lifecycleScope.launch {
-            viewModel.uiState.collect {
+        lifecycleScope.launchWhenStarted {
+            viewModel.uiState.flowWithLifecycle(lifecycle,Lifecycle.State.STARTED).collect {
                 when (it.state) {
                     is RepositoryContract.RepositoriesState.Idle -> Unit
                     is RepositoryContract.RepositoriesState.AllRepositoriesState -> {
@@ -61,10 +62,7 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
             viewModel.effect.collect {
                 when (it) {
                     is RepositoryContract.Effect.ShowMessage -> {
-                        binding!!.txtRepositoryFShowMessage.apply {
-                            isVisible = it.Active
-                            text = it.message
-                        }
+                        Toast.makeText(requireContext(),it.message, Toast.LENGTH_SHORT).show()
                     }
                     is RepositoryContract.Effect.ShowLoading -> {
                         binding!!.progressBarRepository.isVisible = it.Active

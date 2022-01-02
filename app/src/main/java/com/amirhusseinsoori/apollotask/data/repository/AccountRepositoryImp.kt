@@ -12,17 +12,17 @@ import com.amirhusseinsoori.apollotask.data.mappers.mapToProfileModel
 import com.amirhusseinsoori.apollotask.data.source.local.account.AccountLocalSource
 import com.amirhusseinsoori.apollotask.data.source.remote.RemoteSource
 import com.amirhusseinsoori.apollotask.domain.exption.Result
+import com.amirhusseinsoori.apollotask.domain.model.NodeModel
 
 
 import com.amirhusseinsoori.apollotask.domain.model.ProfileModel
 import com.amirhusseinsoori.apollotask.domain.repository.ProfileRepositry
+import com.amirhusseinsoori.apollotask.util.isConnectedToInternet
 
 
 import example.myapplication.ProfileQuery
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class AccountRepositoryImp @Inject constructor(
@@ -55,7 +55,17 @@ class AccountRepositoryImp @Inject constructor(
                             emit(Result.loading<ProfileModel>())
                         }
                         is StoreResponse.Error -> {
-                            emit(Result.error<ProfileModel>(message = response.errorMessageOrNull()))
+                            isConnectedToInternet().collect {network->
+                                network.fold(onSuccess = {network->
+                                    if(network){
+                                        emit(Result.error<ProfileModel>(message = response.errorMessageOrNull()))
+                                    }else{
+                                        emit(Result.error<ProfileModel>(message = "please check connection network"))
+                                    }
+                                }, onFailure = {
+                                    emit(Result.error<ProfileModel>(message = "google is done :)"))
+                                })
+                            }
                         }
                         is StoreResponse.Data -> {
                             emit(Result.success(response.value.mapToProfileModel()))

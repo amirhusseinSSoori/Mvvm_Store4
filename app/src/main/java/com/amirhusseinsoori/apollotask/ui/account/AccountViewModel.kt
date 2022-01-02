@@ -19,6 +19,9 @@ class AccountViewModel @Inject constructor(private val showAccountDetailsUseCase
             AccountContract.ProfileState.Idle
         )
     }
+    init {
+       setEvent(AccountContract.Event.EventProfile)
+    }
 
     override fun handleEvent(event: AccountContract.Event) {
         when (event) {
@@ -43,9 +46,6 @@ class AccountViewModel @Inject constructor(private val showAccountDetailsUseCase
                                 )
                             }
                             setEffect { AccountContract.Effect.ShowLoading(false) }
-                            setEffect {
-                                AccountContract.Effect.ShowMessage(EMPTY_STRING, false)
-                            }
                         } ?: run {
                             setEffect { AccountContract.Effect.ShowLoading(false) }
                         }
@@ -55,7 +55,7 @@ class AccountViewModel @Inject constructor(private val showAccountDetailsUseCase
                     }
                     result.isError() -> {
                         setEffect {
-                            AccountContract.Effect.ShowMessage(Problem, true)
+                            AccountContract.Effect.ShowMessage(result.message!!, true)
                         }
                         setEffect { AccountContract.Effect.ShowLoading(false) }
                     }

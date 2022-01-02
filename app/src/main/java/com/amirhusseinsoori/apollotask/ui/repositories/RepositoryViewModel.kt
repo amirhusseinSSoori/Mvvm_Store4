@@ -25,6 +25,9 @@ class RepositoryViewModel @Inject constructor(
             RepositoryContract.RepositoriesState.Idle
         )
     }
+    init {
+        setEvent(RepositoryContract.Event.EventRepository)
+    }
 
     override fun handleEvent(event: RepositoryContract.Event) {
         when (event) {
@@ -50,9 +53,6 @@ class RepositoryViewModel @Inject constructor(
                                 )
                             }
                             setEffect { RepositoryContract.Effect.ShowLoading(false) }
-                            setEffect {
-                                RepositoryContract.Effect.ShowMessage(Problem, false)
-                            }
                         } ?: run {
                             setEffect { RepositoryContract.Effect.ShowLoading(false) }
                         }
@@ -62,7 +62,7 @@ class RepositoryViewModel @Inject constructor(
                     }
                     result.isError() -> {
                         setEffect {
-                            RepositoryContract.Effect.ShowMessage(Problem, true)
+                            RepositoryContract.Effect.ShowMessage(message = result.message!!, true)
                         }
                         setEffect { RepositoryContract.Effect.ShowLoading(false) }
                     }
