@@ -13,10 +13,6 @@ object Binding {
         view.visibility = if (value) View.VISIBLE else View.GONE
     }
 
-    @BindingAdapter("srcUrl")
-    @JvmStatic
-    fun loadImage(view: ImageView, imageUrl: String?) {
-        loadImage(imageUrl, view)
-    }
+
 
 }

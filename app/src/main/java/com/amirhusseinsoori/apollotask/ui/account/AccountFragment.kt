@@ -63,6 +63,7 @@ class AccountFragment : Fragment() {
                         it.state.profile.let { data ->
                             dataBinding?.apply {
                                 profile = data
+                                Pair(data.avatarUrl!!, imgAccountProfileFShowImage).setImage()
                             }
                         }
                     }

@@ -22,7 +22,6 @@
         android:id="@+id/img_accountProfileF_showImage"
         android:layout_width="@dimen/imgProfile"
         android:layout_height="@dimen/imgProfile"
-        app:srcUrl="@{profile.avatarUrl}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
