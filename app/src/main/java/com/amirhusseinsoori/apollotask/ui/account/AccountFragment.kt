@@ -56,7 +56,7 @@ class AccountFragment : Fragment() {
 
     private fun initObserve() {
         lifecycleScope.launchWhenStarted {
-            viewModel.uiState.collect {
+            viewModel.uiState.flowWithLifecycle(lifecycle,Lifecycle.State.CREATED).collect {
                 when (it.state) {
                     is AccountContract.ProfileState.Idle -> Unit
                     is AccountContract.ProfileState.DetailsProfileState -> {
@@ -75,7 +75,7 @@ class AccountFragment : Fragment() {
 
     private fun sideEffect() {
         lifecycleScope.launch {
-            viewModel.effect.flowWithLifecycle(lifecycle,Lifecycle.State.STARTED).collect {
+            viewModel.effect.flowWithLifecycle(lifecycle,Lifecycle.State.CREATED).collect {
                 when (it) {
                     is AccountContract.Effect.ShowMessage -> {
                         Toast.makeText(requireContext(),it.message, Toast.LENGTH_SHORT).show()

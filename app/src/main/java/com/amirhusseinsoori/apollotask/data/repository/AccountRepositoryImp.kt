@@ -74,6 +74,6 @@ class AccountRepositoryImp @Inject constructor(
 
                     }
                 }
-        }.flowOn(dispatcher.io)
+        }.flowOn(dispatcher.io).cancellable()
     }
 }

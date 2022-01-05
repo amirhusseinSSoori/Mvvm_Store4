@@ -10,6 +10,7 @@ import com.amirhusseinsoori.apollotask.ui.account.AccountContract
 import com.amirhusseinsoori.apollotask.ui.base.BaseViewModel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject

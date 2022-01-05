@@ -44,8 +44,8 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
     }
 
     private fun initObserve() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.uiState.flowWithLifecycle(lifecycle,Lifecycle.State.STARTED).collect {
+        lifecycleScope.launch() {
+            viewModel.uiState.flowWithLifecycle(lifecycle,Lifecycle.State.CREATED).collect {
                 when (it.state) {
                     is RepositoryContract.RepositoriesState.Idle -> Unit
                     is RepositoryContract.RepositoriesState.AllRepositoriesState -> {
@@ -59,7 +59,7 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
 
     private fun sideEffect() {
         lifecycleScope.launchWhenStarted {
-            viewModel.effect.collect {
+            viewModel.effect.flowWithLifecycle(lifecycle,Lifecycle.State.CREATED).collect {
                 when (it) {
                     is RepositoryContract.Effect.ShowMessage -> {
                         Toast.makeText(requireContext(),it.message, Toast.LENGTH_SHORT).show()

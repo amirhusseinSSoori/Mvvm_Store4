@@ -19,10 +19,7 @@ import com.amirhusseinsoori.apollotask.util.isConnectedToInternet
 
 
 import example.myapplication.GetListQuery
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class RepositoryImp @Inject constructor(
@@ -71,7 +68,7 @@ class RepositoryImp @Inject constructor(
                         is StoreResponse.NoNewData -> emit(Result.success(emptyList<NodeModel>()))
                     }
                 }
-        }.flowOn(dispatcher.io)
+        }.flowOn(dispatcher.io).cancellable()
     }
 
 

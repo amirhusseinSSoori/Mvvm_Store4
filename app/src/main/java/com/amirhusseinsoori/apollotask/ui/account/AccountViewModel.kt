@@ -6,6 +6,7 @@ import com.amirhusseinsoori.apollotask.common.Constance.Problem
 import com.amirhusseinsoori.apollotask.domain.interactor.account.ShowAccountDetailsUseCase
 import com.amirhusseinsoori.apollotask.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
