@@ -14,8 +14,9 @@
         <action
             android:id="@+id/action_introFragment_to_repositoryFragment2"
             app:destination="@id/repositoryFragment"
+
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
 
 
@@ -34,7 +35,11 @@
 
         <action
             android:id="@+id/action_repositoryFragment_to_accountFragment2"
-            app:destination="@id/accountFragment" />
+            app:destination="@id/accountFragment"
+            app:enterAnim="@anim/h_fragment_enter"
+            app:exitAnim="@anim/h_fragment_exit"
+            app:popEnterAnim="@anim/h_fragment_enter"
+            app:popExitAnim="@anim/h_fragment_exit"/>
     </fragment>
 
 

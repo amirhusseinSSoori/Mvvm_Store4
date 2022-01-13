@@ -30,11 +30,12 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         repositoryAdapter = RepositoryAdapter(this)
-        sideEffect()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sideEffect()
         initObserve()
 
         binding.txtRepositoryFShowMessage.setOnClickListener {
@@ -44,7 +45,7 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
     }
 
     private fun initObserve() {
-        lifecycleScope.launch() {
+        viewLifecycleOwner.lifecycleScope.launch() {
             viewModel.uiState.flowWithLifecycle(lifecycle,Lifecycle.State.CREATED).collect {
                 when (it.state) {
                     is RepositoryContract.RepositoriesState.Idle -> Unit
@@ -58,14 +59,14 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
 
 
     private fun sideEffect() {
-        lifecycleScope.launchWhenStarted {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.effect.flowWithLifecycle(lifecycle,Lifecycle.State.CREATED).collect {
                 when (it) {
                     is RepositoryContract.Effect.ShowMessage -> {
                         Toast.makeText(requireContext(),it.message, Toast.LENGTH_SHORT).show()
                     }
                     is RepositoryContract.Effect.ShowLoading -> {
-                        binding!!.progressBarRepository.isVisible = it.Active
+                        binding.progressBarRepository.isVisible = it.Active
                     }
                 }
             }
@@ -75,9 +76,12 @@ class RepositoryFragment : BaseFragment<FragmentRepositoryBinding>(FragmentRepos
 
 
     private fun setUpSeriesRecycler(list: List<NodeModel>) {
-        binding!!.recyclerviewRepositoryF.adapter = repositoryAdapter
-        binding!!.recyclerviewRepositoryF.setHasFixedSize(true)
-        repositoryAdapter?.submitList(list!!)
+        binding.apply {
+           recyclerviewRepositoryF.adapter = repositoryAdapter
+           recyclerviewRepositoryF.setHasFixedSize(true)
+            repositoryAdapter.submitList(list)
+        }
+
     }
 
     override fun onNavigationToAccount() {

@@ -31,7 +31,7 @@ class AccountFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        sideEffect()
+
     }
 
     override fun onCreateView(
@@ -47,6 +47,7 @@ class AccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sideEffect()
         initObserve()
         dataBinding?.txtAccountProfileFShowMessage?.setOnClickListener {
             viewModel.setEvent(AccountContract.Event.EventProfile)
@@ -55,7 +56,7 @@ class AccountFragment : Fragment() {
     }
 
     private fun initObserve() {
-        lifecycleScope.launchWhenStarted {
+       viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiState.flowWithLifecycle(lifecycle,Lifecycle.State.CREATED).collect {
                 when (it.state) {
                     is AccountContract.ProfileState.Idle -> Unit
@@ -74,7 +75,7 @@ class AccountFragment : Fragment() {
     }
 
     private fun sideEffect() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.effect.flowWithLifecycle(lifecycle,Lifecycle.State.CREATED).collect {
                 when (it) {
                     is AccountContract.Effect.ShowMessage -> {
